@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.vungle.vunglesdk" android:versionName="1.0" android:versionCode="1" android:installLocation="preferExternal">
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="18" />
+	<uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+	<uses-feature android:name="android.hardware.touchscreen.multitouch" android:required="false" />
+	<uses-feature android:name="android.hardware.touchscreen.multitouch.distinct" android:required="false" />
+
+	<application>
+		<activity
+			android:name="com.vungle.warren.ui.VungleActivity"
+			android:configChanges="keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize"
+			android:launchMode="singleTop"
+			android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+
+		<activity
+			android:name="com.vungle.warren.ui.VungleFlexViewActivity"
+			android:configChanges="keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize"
+			android:launchMode="singleTop"
+			android:hardwareAccelerated="true"
+			android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+		<receiver
+			android:name="com.vungle.warren.NetworkProviderReceiver"
+			android:enabled="false">
+			<intent-filter>
+				<action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+		</receiver>
+	</application>
+</manifest>
