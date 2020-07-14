@@ -4,3 +4,7 @@ Assets/GleyPlugins/Ads/
 Assets/GleyPlugins/Ads.meta
 Temp/
 *.apk
+*.csproj
+*.sln
+.vs/
+obj/
