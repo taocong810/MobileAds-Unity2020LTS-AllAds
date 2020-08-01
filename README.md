@@ -1,7 +1,7 @@
 # Mobile Ads 2019
 A demo project with all supported advertisers already integrated and working.\
 All you have to do is to import Mobile Ads from the Asset Store inside this project:
-https://assetstore.unity.com/packages/tools/integration/mobile-ads-gdpr-compliant-102892
+https://assetstore.unity.com/packages/tools/integration/mobile-ads-gdpr-compliant-102892?aid=1011l8QY4
 
 # Contains the following Advertiser SDKs:
 - Google Mobile Ads Unity Plugin v.5.2.0
