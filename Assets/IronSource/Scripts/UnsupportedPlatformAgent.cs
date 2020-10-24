@@ -23,16 +23,6 @@ public class UnsupportedPlatformAgent : IronSourceIAgent
 	{
 		Debug.Log ("Unsupported Platform");
 	}
-	
-	public void setAge (int age)
-	{
-		Debug.Log ("Unsupported Platform");
-	}
-	
-	public void setGender (string gender)
-	{
-		Debug.Log ("Unsupported Platform");
-	}
 
 	public void setMediationSegment (string segment)
 	{
@@ -71,9 +61,14 @@ public class UnsupportedPlatformAgent : IronSourceIAgent
         Debug.Log("Unsupported Platform");
     }
 
-    //******************* SDK Init *******************//
+	public void setMetaData(string key, params string[] values)
+	{
+		Debug.Log("Unsupported Platform");
+	}
 
-    public void setUserId (string userId)
+	//******************* SDK Init *******************//
+
+	public void setUserId (string userId)
 	{
 		Debug.Log ("Unsupported Platform");
 	}

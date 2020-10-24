@@ -1,4 +1,4 @@
-#import "AdColonyTypes.h"
+#import <AdColony/AdColonyTypes.h>
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
  Instances of this class should not be initialized directly; instead, use the AdColonyNativeAdView passed back the success handler in
  `[AdColony requestNativeAdViewInZone:size:options:viewController:success:failure:]`.
  */
+__attribute__((deprecated("This ad type is deprecated. It will be removed in a future release")))
 @interface AdColonyNativeAdView : UIView
 
 /** @name Zone */

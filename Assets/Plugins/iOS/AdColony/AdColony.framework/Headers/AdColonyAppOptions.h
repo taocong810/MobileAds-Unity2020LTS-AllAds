@@ -1,5 +1,5 @@
-#import "AdColonyOptions.h"
-#import "AdColonyTypes.h"
+#import <AdColony/AdColonyOptions.h>
+#import <AdColony/AdColonyTypes.h>
 #import <Foundation/Foundation.h>
 
 @class AdColonyUserMetadata;
@@ -49,6 +49,14 @@ FOUNDATION_EXPORT NSString *const ADCAdobeAir;
 
 /** Cocos2d-x */
 FOUNDATION_EXPORT NSString *const ADCCocos2dx;
+
+/**
+* Use the following pre-defined constants for type of privacy framework.
+*/
+FOUNDATION_EXPORT NSString *const ADC_GDPR;
+FOUNDATION_EXPORT NSString *const ADC_CCPA;
+FOUNDATION_EXPORT NSString *const ADC_COPPA;
+
 
 /**
  AdColonyAppOptions objects are used to set configurable aspects of SDK state and behavior, such as a custom user identifier.
@@ -123,13 +131,49 @@ FOUNDATION_EXPORT NSString *const ADCCocos2dx;
  @abstract This is to inform the AdColony service if GDPR should be considered for the user based on if they are they EU citizens or from EU territories. Default is FALSE.
  @discussion This is for GDPR compliance, see https://www.adcolony.com/gdpr/
  */
-@property (nonatomic, assign) BOOL gdprRequired;
+@property (nonatomic, assign) BOOL gdprRequired __attribute__((deprecated("Deprecated in v4.2.0, use setPrivacyFrameworkOfType:isRequired: instead")));
 
 /**
  @abstract Defines end user's consent for information collected from the user.
  @discussion The IAB Europe Transparency and Consent framework defines standard APIs and formats for communicating between Consent Management Platforms (CMPs) collecting consents from end users and vendors embedded on a website or in a mobile application. It provides a unified interface for a seamless integration where CMPs and vendors do not have to integrate manually with hundreds of partners. This is for GDPR compliance through IAB, see https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/master/v1.1%20Implementation%20Guidelines.md#vendors
  */
-@property (nonatomic, nullable, strong) NSString *gdprConsentString;
+@property (nonatomic, nullable, strong) NSString *gdprConsentString __attribute__((deprecated("Deprecated in v4.2.0, use setPrivacyConsentString:forType: instead")));
+
+/**
+@abstract Set privacy framework required key in the app options.
+@discussion Use this API to provide AdColony with whether or not following the specified privacy framework is required for the user.
+@param type one of the constants defined in this class ADC_GDPR, ADC_CCPA, ADC_COPPA.
+@param required whether or not we need to consider the privacy framework of the specified type for this user.
+@return updated app options.
+*/
+- (AdColonyAppOptions *)setPrivacyFrameworkOfType:(NSString *)type isRequired:(BOOL)required;
+
+/**
+@abstract Set consent string for privacy framework in the app options.
+@discussion Use this API to provide AdColony with the user's consent string of the specified type if applicable.
+@param consentString the user's consent string of the specified type.
+                    For GDPR, this should either be "0" or "1" (representing do not consent, or consent), or the IAB standard consent String.
+                    For CCPA, this should either be "0", or "1" (representing do not sell = true, or do not sell = false), or the IAB standard consent String.
+@param type one of the constants defined in this class ADC_GDPR, ADC_CCPA.
+@return updated app options.
+*/
+- (AdColonyAppOptions *)setPrivacyConsentString:(NSString *)consentString forType:(NSString *)type;
+
+/**
+@abstract Get privacy framework required key set in the app options.
+@discussion Use this API to retrieve the specified privacy framework required key set in the app options.
+@param type one of the constants defined in this class ADC_GDPR, ADC_CCPA, ADC_COPPA.
+@return the value for the consent requirement of the specified type has been set, or NO if it has not.
+*/
+- (BOOL)getPrivacyFrameworkRequiredForType:(NSString *)type;
+
+/**
+@abstract Get privacy framework consent string set in the app options.
+@discussion Use this API to retrieve the specified privacy consent string set in the app options.
+@param type one of the constants defined in this class ADC_GDPR, ADC_CCPA.
+@return the value for the specified consent string or nil value if it has not been set.
+*/
+- (NSString *)getPrivacyConsentStringForType:(NSString *)type;
 
 @end
 

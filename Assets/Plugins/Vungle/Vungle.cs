@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public static partial class Vungle
 {
-	public const string PluginVersion = "6.7.1.0";
+	public const string PluginVersion = "6.8.1.0";
 
 	public enum Consent
 	{
@@ -31,6 +31,14 @@ public static partial class Vungle
 		VungleAdSizeBannerLeaderboard,  // width = 728.0f, .height = 90.0f
 	}
 
+	public enum AppTrackingStatus
+	{
+		NOT_DETERMINED = 0,
+		RESTRICTED = 1,
+		DENIED = 2,
+		AUTHORIZED = 3,
+	}
+
 	static IVungleHelper helper;
 
 	// Fired when a Vungle SDK initialized
@@ -49,6 +57,8 @@ public static partial class Vungle
 	public static Action<string> onErrorEvent;
 	// Fired when the warning is thrown
 	public static Action<string> onWarningEvent;
+	// Fired when the App Tracking callback is fired
+	public static Action<AppTrackingStatus> onAppTrackingEvent;
 
 	public static long? minimumDiskSpaceForInitialization;
 	public static long? minimumDiskSpaceForAd;
@@ -204,6 +214,19 @@ public static partial class Vungle
 	#endregion
 
 	#region SDKSetup
+	public static void RequestTrackingAuthorization()
+	{
+		try
+		{
+			helper.RequestTrackingAuthorization();
+		}
+		catch (Exception e)
+		{
+			VungleLog.Log(VungleLog.Level.Error, "RequestTrackingAuthorization", "Vungle.RequestTrackingAuthorization", e.Message);
+		}
+	}
+
+
 	public static void SetMinimumDiskSpaceForInitialization(long minimumDiskSpace)
 	{
 		minimumDiskSpaceForInitialization = minimumDiskSpace;

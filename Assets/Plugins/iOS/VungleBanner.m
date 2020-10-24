@@ -1,15 +1,13 @@
 //
 //  VungleBanner.m
-//  Vungle Unity Plugin 6.7.0
+//  Vungle Unity Plugin 6.8.0
 //
 //  Copyright (c) 2013-Present Vungle Inc. All rights reserved.
 //
 
+#import "UnityInterface.h"
 #import <Foundation/Foundation.h>
 #import "VungleBanner.h"
-
-UIViewController *UnityGetGLViewController(void);
-void UnitySendMessage(const char * className, const char * methodName, const char * param);
 
 @implementation VungleBanner
 
@@ -35,7 +33,9 @@ void UnitySendMessage(const char * className, const char * methodName, const cha
     [UnityGetGLViewController().view bringSubviewToFront:adViewContainer];
     [self positionViewContainer];
 
-    BOOL succeed = [VungleSDK.sharedSDK addAdViewToView:adViewContainer withOptions:nil placementID:placementID error:error];
+    NSMutableDictionary* playOptions = [[NSMutableDictionary alloc] init];
+    playOptions[VunglePlayAdOptionKeyStartMuted] = @([VungleSDK sharedSDK].muted);
+    BOOL succeed = [VungleSDK.sharedSDK addAdViewToView:adViewContainer withOptions:playOptions placementID:placementID error:error];
     if (!succeed) {
         UnitySendMessage("VungleManager", "OnSDKLog", [[NSString stringWithFormat:@"Failed to show banner %@ with error %@", placementID, [*error localizedDescription]] UTF8String]);
         [self closeBanner];

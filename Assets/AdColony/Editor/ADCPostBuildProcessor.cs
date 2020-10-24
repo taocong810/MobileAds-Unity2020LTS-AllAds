@@ -38,7 +38,11 @@ namespace AdColony.Editor
             PBXProject project = new PBXProject();
             project.ReadFromString(File.ReadAllText(projectPath));
 
+#if UNITY_2019_4_OR_NEWER
+            string targetId = project.GetUnityFrameworkTargetGuid();
+#else
             string targetId = project.TargetGuidByName(PBXProject.GetUnityTargetName());
+#endif
 
             // Required Frameworks
             project.AddFrameworkToProject(targetId, "AdSupport.framework", false);
@@ -71,20 +75,28 @@ namespace AdColony.Editor
 #if UNITY_IOS
             PlistDocument plist = new PlistDocument();
             plist.ReadFromString(File.ReadAllText(plistPath));
-
             PlistElementDict root = plist.root;
-
-            PlistElementArray applicationQueriesSchemes = root.CreateArray("LSApplicationQueriesSchemes");
-            applicationQueriesSchemes.AddString("fb");
-            applicationQueriesSchemes.AddString("instagram");
-            applicationQueriesSchemes.AddString("tumblr");
-            applicationQueriesSchemes.AddString("twitter");
-
-            root.SetString("NSCalendarsUsageDescription", "Some ad content may create a calendar event.");
-            root.SetString("NSPhotoLibraryUsageDescription", "Some ad content may require access to the photo library.");
-            root.SetString("NSCameraUsageDescription", "Some ad content may access camera to take picture.");
-            root.SetString("NSMotionUsageDescription", "Some ad content may require access to accelerometer for interactive ad experience.");
-
+            var applicationQueriesSchemes = plist.root["LSApplicationQueriesSchemes"] != null ? plist.root["LSApplicationQueriesSchemes"].AsArray() : null;
+            if (applicationQueriesSchemes == null)
+                applicationQueriesSchemes = plist.root.CreateArray("LSApplicationQueriesSchemes");
+            foreach (var scheme in new[]{ "fb", "instagram", "tumblr", "twitter" })
+                if (applicationQueriesSchemes.values.Find(x => x.AsString() == scheme) == null)
+                    applicationQueriesSchemes.AddString(scheme);
+            foreach (var kvp in new[] {
+            new []
+                { "NSCalendarsUsageDescription", "Some ad content may create a calendar event." }
+                ,
+            new []
+                { "NSPhotoLibraryUsageDescription", "Some ad content may require access to the photo library." }
+                ,
+            new []
+                { "NSCameraUsageDescription", "Some ad content may access camera to take picture." }
+                ,
+            new []
+                { "NSMotionUsageDescription", "Some ad content may require access to accelerometer for interactive ad experience." }
+            })
+            if (!root.values.ContainsKey(kvp[0]))
+                    root.SetString(kvp[0], kvp[1]);
             File.WriteAllText(plistPath, plist.WriteToString());
 #endif
         }

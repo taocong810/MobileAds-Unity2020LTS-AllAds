@@ -1,16 +1,17 @@
 ﻿using System;
-using System.Text;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Runtime.InteropServices;
 
 #if UNITY_WSA_10_0 || UNITY_WINRT_8_1 || UNITY_METRO
 using VungleSDKProxy;
 
 public enum VungleAdOrientation
 {
-	AutoRotate,
-	MatchVideo
+	Portrait = 1,
+	Landscape = 5,
+	All = 6,
+	AutoRotate = 6,
+	MatchVideo = 6,
 }
 
 public class OptionConstants
@@ -28,9 +29,7 @@ public class OptionConstants
 public partial class VungleWindows : IVungleHelper
 {
 	private VungleAd sdk;
-	private AdConfig cfg;
 	private bool isSoundEnabled = true;
-	private VungleAdOrientation orientation = VungleAdOrientation.AutoRotate;
 	private string endpoint = "https://ads.api.vungle.com";
 
 	public string SdkVersion
@@ -50,6 +49,8 @@ public partial class VungleWindows : IVungleHelper
 	}
 
 	#region SDKSetup
+	public void RequestTrackingAuthorization() { }
+
 	public void UpdateConsentStatus(Vungle.Consent consent, string version = "1.0")
 	{
 		if (Vungle.Consent.Undefined == consent) { return; }
@@ -143,10 +144,10 @@ public partial class VungleWindows : IVungleHelper
 		{
 			if (sdk != null && sdk.IsAdPlayable(placementId))
 			{
-				cfg = new AdConfig();
+				AdConfig cfg = new AdConfig();
 				cfg.SetUserId(string.Empty);
 				cfg.SetSoundEnabled(this.isSoundEnabled);
-				cfg.SetOrientation((orientation == VungleAdOrientation.AutoRotate) ? DisplayOrientations.AutoRotate : DisplayOrientations.Landscape);
+				cfg.SetOrientation(DisplayOrientations.AutoRotate);
 				sdk.PlayAd(cfg, placementId);
 			}
 		});
@@ -163,7 +164,7 @@ public partial class VungleWindows : IVungleHelper
 					options = new Dictionary<string, object>();
 				}
 
-				cfg = new AdConfig();
+				AdConfig cfg = new AdConfig();
 				SetAdConfig(cfg, options);
 				if (options.ContainsKey(OptionConstants.FlexCloseSec) && options[OptionConstants.FlexCloseSec] is string)
 				{
@@ -184,31 +185,60 @@ public partial class VungleWindows : IVungleHelper
 
 	private void SetAdConfig(AdConfig config, Dictionary<string, object> options)
 	{
-		cfg.SetSoundEnabled(this.isSoundEnabled);
-		SetValue<string>(options, OptionConstants.UserTag, cfg.SetUserId);
+		config.SetSoundEnabled(this.isSoundEnabled);
+		SetValue<string>(options, OptionConstants.UserTag, config.SetUserId);
+		SetValue<string>(options, OptionConstants.AlertText, config.SetIncentivizedDialogBody);
+		SetValue<string>(options, OptionConstants.AlertTitle, config.SetIncentivizedDialogTitle);
+		SetValue<string>(options, OptionConstants.CloseText, config.SetIncentivizedDialogCloseButton);
+		SetValue<string>(options, OptionConstants.ContinueText, config.SetIncentivizedDialogContinueButton);
+		SetValue<bool>(options, OptionConstants.BackImmediately, config.SetBackButtonImmediatelyEnabled);
+
 		if (options.ContainsKey(OptionConstants.Orientation))
 		{
-			if (!SetValue(options, OptionConstants.Orientation, cfg.SetOrientation,
-				(bool b) => { return b ? DisplayOrientations.Landscape : DisplayOrientations.AutoRotate; }))
+			// Legacy implementation
+			// If it is true, then it means Landscape
+			// If it is false, then it means AutoRotate
+			if (options[OptionConstants.Orientation] is bool)
 			{
-				SetValue(options, OptionConstants.Orientation, cfg.SetOrientation, (VungleAdOrientation vao) =>
+				bool orientation = (bool)options[OptionConstants.Orientation];
+				if (orientation)
 				{
-					return (vao == VungleAdOrientation.AutoRotate) ? DisplayOrientations.AutoRotate : DisplayOrientations.Landscape;
-				});
+					config.SetOrientation(DisplayOrientations.Landscape);
+				}
+				else
+				{
+					config.SetOrientation(DisplayOrientations.AutoRotate);
+				}
+			}
+			else if (options[OptionConstants.Orientation] is int)
+			{
+				int orientation = (int)options[OptionConstants.Orientation];
+				switch (orientation)
+				{
+					case 1:
+						config.SetOrientation(DisplayOrientations.Portrait);
+						break;
+					case 5:
+						config.SetOrientation(DisplayOrientations.Landscape);
+						break;
+					default:
+						config.SetOrientation(DisplayOrientations.AutoRotate);
+						break;
+				}
+			}
+			else
+			{
+				config.SetOrientation(DisplayOrientations.AutoRotate);
 			}
 		}
 		else
 		{
-			cfg.SetOrientation((orientation == VungleAdOrientation.AutoRotate) ? DisplayOrientations.AutoRotate : DisplayOrientations.Landscape);
+			// default to autorotate
+			config.SetOrientation(DisplayOrientations.AutoRotate);
 		}
-		SetValue<string>(options, OptionConstants.AlertText, cfg.SetIncentivizedDialogBody);
-		SetValue<string>(options, OptionConstants.AlertTitle, cfg.SetIncentivizedDialogTitle);
-		SetValue<string>(options, OptionConstants.CloseText, cfg.SetIncentivizedDialogCloseButton);
-		SetValue<string>(options, OptionConstants.ContinueText, cfg.SetIncentivizedDialogContinueButton);
-		SetValue<bool>(options, OptionConstants.BackImmediately, cfg.SetBackButtonImmediatelyEnabled);
 	}
 
-	private bool SetValue<T>(Dictionary<string, object> options, string key, Action<T> callback)
+	private void SetValue<T>(Dictionary<string, object> options, string key, Action<T> callback)
 	{
 		if (options != null && !string.IsNullOrEmpty(key) &&
 			options.ContainsKey(key) && options[key] is T)
@@ -217,13 +247,11 @@ public partial class VungleWindows : IVungleHelper
 			{
 				callback((T)options[key]);
 			}
-			return true;
 		}
-		return false;
 	}
 
 	private delegate U CalculateValue<T, U>(T obj);
-	private bool SetValue<T, U>(Dictionary<string, object> options, string key, Action<U> callback, CalculateValue<T, U> valueCallback)
+	private void SetValue<T, U>(Dictionary<string, object> options, string key, Action<U> callback, CalculateValue<T, U> valueCallback)
 	{
 		if (options != null && !string.IsNullOrEmpty(key) &&
 			options.ContainsKey(key) && options[key] is T)
@@ -232,9 +260,7 @@ public partial class VungleWindows : IVungleHelper
 			{
 				callback(valueCallback((T)options[key]));
 			}
-			return true;
 		}
-		return false;
 	}
 
 	public bool CloseAd(string placementId)
@@ -341,11 +367,6 @@ public partial class VungleWindows : IVungleHelper
 	#endregion
 
 	#region PlaybackOptions
-	// Sets the allowed orientations of any ads that are displayed
-	public void setAdOrientation(VungleAdOrientation orientation)
-	{
-		this.orientation = orientation;
-	}
 
 	public void SetSoundEnabled(bool isEnabled)
 	{

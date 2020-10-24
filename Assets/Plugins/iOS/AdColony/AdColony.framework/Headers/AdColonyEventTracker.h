@@ -63,6 +63,12 @@ FOUNDATION_EXPORT NSString *const ADCEventReservation;
 /** Post-install search event */
 FOUNDATION_EXPORT NSString *const ADCEventSearch;
 
+/** Ad Impression event */
+FOUNDATION_EXPORT NSString *const ADCEventAdImpression;
+
+/** App Open event */
+FOUNDATION_EXPORT NSString *const ADCEventAppOpen;
+
 /**
  * Use the following pre-defined values for the `logCustomEvent:withDictionary` method's "event" parameter.
  */
@@ -324,6 +330,18 @@ FOUNDATION_EXPORT NSString *const ADCSocialSharingMethodCustom;
     ADCEventSearch
  */
 + (void)logEvent:(NSString *)name withDictionary:(NSDictionary *)payload;
+
+/**
+ @abstract Log ad impression
+ @discussion Log an event when an ad impression has occurred.
+ */
++ (void)logAdImpression;
+
+/**
+ @abstract Log app open
+ @discussion Log an event when the app has opened.
+ */
++ (void)logAppOpen;
 
 @end
 

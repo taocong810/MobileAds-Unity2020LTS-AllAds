@@ -1,7 +1,7 @@
 //
 //  VungleSDK.h
 //  Vungle iOS SDK
-//  SDK Version: 6.7.0
+//  SDK Version: 6.8.1
 //
 //  Copyright (c) 2013-Present Vungle Inc. All rights reserved.
 //
@@ -79,6 +79,7 @@ typedef enum {
     VungleDiscSpaceProviderErrorNoFileSystemAttributes,
     VungleSDKErrorUnknownBannerSize,
     VungleSDKResetPlacementForDifferentAdSize,
+    VungleSDKErrorSDKAlreadyInitializing,
 } VungleSDKErrorCode;
 
 typedef NS_ENUM (NSInteger, VungleConsentStatus) {
@@ -128,10 +129,18 @@ typedef NS_ENUM (NSInteger, VungleAdSize) {
 - (void)vungleWillShowAdForPlacementID:(nullable NSString *)placementID;
 
 /**
- * If implemented, this will get called when the SDK has just begun showing an ad.
+ * If implemented, this will get called when the SDK has presented the view controller or the
+ * view that houses the ad.
  * @param placementID The placement which is about to be shown.
  */
 - (void)vungleDidShowAdForPlacementID:(nullable NSString *)placementID;
+
+/**
+ * If implemented, this will be called when the ad is first rendered for the specified placement.
+ * @NOTE: Please use this callback to track views.
+ * @param placementID The placement ID of the advertisement shown
+ */
+- (void)vungleAdViewedForPlacement:(NSString *)placementID;
 
 /**
  * If implemented, this method gets called when a Vungle Ad Unit is about to be completely dismissed.
@@ -253,7 +262,7 @@ typedef NS_ENUM (NSInteger, VungleAdSize) {
  */
 - (BOOL)playAd:(UIViewController *)controller options:(nullable NSDictionary *)options placementID:(nullable NSString *)placementID error:(NSError *__autoreleasing _Nullable *_Nullable)error;
 
-#pragma mark - Flex Feed / MREC / Banner Ad lifecycle
+#pragma mark - MREC / Banner Ad lifecycle
 /**
  * Pass in an UIView which acts as a container for the ad experience. This view container may be placed in random positions.
  * @note This method should only be called using placements that have the `flexfeed` or `mrec` or `banner` template type. For

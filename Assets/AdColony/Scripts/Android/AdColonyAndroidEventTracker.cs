@@ -7,12 +7,12 @@ namespace AdColony
     public class EventTrackerAndroid : IEventTracker
     {
 
-        private AndroidJavaClass _plugin;
+        //private AndroidJavaClass _plugin;
         private AndroidJavaClass _pluginWrapper;
 
         public EventTrackerAndroid()
         {
-            _plugin = new AndroidJavaClass("com.adcolony.sdk.AdColonyEventTracker");
+            //_plugin = new AndroidJavaClass("com.adcolony.sdk.AdColonyEventTracker");
             // Separate wrapper to manage type conversions
             _pluginWrapper = new AndroidJavaClass("com.adcolony.unityplugin.UnityADCAds");
         }
@@ -31,12 +31,12 @@ namespace AdColony
 
         public void LogPaymentInfoAdded()
         {
-            _plugin.CallStatic("logPaymentInfoAdded");
+            _pluginWrapper.CallStatic("logPaymentInfoAdded");
         }
 
         public void LogAchievementUnlocked(string description)
         {
-            _plugin.CallStatic("logAchievementUnlocked", description);
+            _pluginWrapper.CallStatic("logAchievementUnlocked", description);
         }
 
         public void LogLevelAchieved(int level)
@@ -47,72 +47,72 @@ namespace AdColony
 
         public void LogAppRated()
         {
-            _plugin.CallStatic("logAppRated");
+            _pluginWrapper.CallStatic("logAppRated");
         }
 
         public void LogActivated()
         {
-            _plugin.CallStatic("logActivated");
+            _pluginWrapper.CallStatic("logActivated");
         }
 
         public void LogTutorialCompleted()
         {
-            _plugin.CallStatic("logTutorialCompleted");
+            _pluginWrapper.CallStatic("logTutorialCompleted");
         }
 
         public void LogSocialSharingEventWithNetwork(string network, string description)
         {
-            _plugin.CallStatic("logSocialSharingEvent", network, description);
+            _pluginWrapper.CallStatic("logSocialSharingEvent", network, description);
         }
 
         public void LogRegistrationCompletedWithMethod(string method, string description)
         {
-            _plugin.CallStatic("logRegistrationCompleted", method, description);
+            _pluginWrapper.CallStatic("logRegistrationCompleted", method, description);
         }
 
         public void LogCustomEvent(string eventName, string description)
         {
-            _plugin.CallStatic("logCustomEvent", eventName, description);
+            _pluginWrapper.CallStatic("logCustomEvent", eventName, description);
         }
 
         public void LogAddToCartWithID(string itemID)
         {
-            _plugin.CallStatic("logAddToCart", itemID);
+            _pluginWrapper.CallStatic("logAddToCart", itemID);
         }
 
         public void LogAddToWishlistWithID(string itemID)
         {
-            _plugin.CallStatic("logAddToWishlist", itemID);
+            _pluginWrapper.CallStatic("logAddToWishlist", itemID);
         }
 
         public void LogCheckoutInitiated()
         {
-            _plugin.CallStatic("logCheckoutInitiated");
+            _pluginWrapper.CallStatic("logCheckoutInitiated");
         }
 
         public void LogContentViewWithID(string contentID, string contentType)
         {
-            _plugin.CallStatic("logContentView", contentID, contentType);
+            _pluginWrapper.CallStatic("logContentView", contentID, contentType);
         }
 
         public void LogInvite()
         {
-            _plugin.CallStatic("logInvite");
+            _pluginWrapper.CallStatic("logInvite");
         }
 
         public void LogLoginWithMethod(string method)
         {
-            _plugin.CallStatic("logLogin", method);
+            _pluginWrapper.CallStatic("logLogin", method);
         }
 
         public void LogReservation()
         {
-            _plugin.CallStatic("logReservation");
+            _pluginWrapper.CallStatic("logReservation");
         }
 
         public void LogSearchWithQuery(string queryString)
         {
-            _plugin.CallStatic("logSearch", queryString);
+            _pluginWrapper.CallStatic("logSearch", queryString);
         }
 
         public void LogEvent(string name, Hashtable data)
@@ -124,8 +124,18 @@ namespace AdColony
             }
             else
             {
-                _plugin.CallStatic("logEvent", name);
+                _pluginWrapper.CallStatic("logEvent", name);
             }
+        }
+
+        public void LogAdImpression()
+        {
+            _pluginWrapper.CallStatic("logAdImpression");
+        }
+
+        public void LogAppOpen()
+        {
+            _pluginWrapper.CallStatic("logAppOpen");
         }
     }
 #endif

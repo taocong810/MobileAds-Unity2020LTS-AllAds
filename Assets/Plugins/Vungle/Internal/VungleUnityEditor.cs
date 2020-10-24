@@ -44,5 +44,6 @@ public partial class VungleUnityEditor : IVungleHelper
 
 	public void OnResume() { return; }
 	public void OnPause() { return; }
+	public void RequestTrackingAuthorization() { }
 }
 #endif

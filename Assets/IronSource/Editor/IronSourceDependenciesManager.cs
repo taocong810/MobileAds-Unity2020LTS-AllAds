@@ -10,7 +10,7 @@ using UnityEngine.Networking;
 
 public class IronSourceDependenciesManager : EditorWindow
 {
-    private const string jsonURL = "http://ssa.public.s3.amazonaws.com/ironsource-integration-manager/IronSourceSDKInfo.json";
+    private const string jsonURL = "http://ssa.public.s3.amazonaws.com/Ironsource-Unity-Integration-Manager/IronSourceSDKInfo.json";
     private const string ironSourceDownloadDir = "Assets/IronSource/Editor/";
     private const string sdk = "sdk";
     private const string errorMessage = "SDK and adapters data are not available right now. Try again soon.";
@@ -396,7 +396,7 @@ public class IronSourceDependenciesManager : EditorWindow
                 GUILayout.Space(5);
                 using (new EditorGUILayout.HorizontalScope(GUILayout.ExpandWidth(false)))
                 {
-                    GUILayout.Label(messageData);
+                    EditorGUILayout.SelectableLabel(messageData, EditorStyles.textField, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
                 }
                 GUILayout.Space(5);
             }

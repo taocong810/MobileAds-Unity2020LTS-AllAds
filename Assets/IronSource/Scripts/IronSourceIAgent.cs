@@ -6,10 +6,6 @@ public interface IronSourceIAgent
 
 	void onApplicationPause (bool pause);
 
-	void setAge (int age);
-
-	void setGender (string gender);
-
 	void setMediationSegment (string segment);
 
 	string getAdvertiserId ();
@@ -23,6 +19,8 @@ public interface IronSourceIAgent
 	void setAdaptersDebug(bool enabled);
 
     void setMetaData(string key, string value);
+
+	void setMetaData(string key, params string[] values);
 
 	//******************* SDK Init *******************//
 

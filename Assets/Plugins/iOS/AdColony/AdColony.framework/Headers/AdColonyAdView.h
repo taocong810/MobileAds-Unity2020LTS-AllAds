@@ -1,7 +1,7 @@
 
 
 #import <UIKit/UIKit.h>
-#import "AdColonyAdViewDelegate.h"
+#import <AdColony/AdColonyAdViewDelegate.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

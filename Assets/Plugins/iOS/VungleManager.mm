@@ -1,20 +1,19 @@
 //
 //  VungleManager.mm
-//  Vungle Unity Plugin 6.7.0
+//  Vungle Unity Plugin 6.8.0
 //
 //  Copyright (c) 2013-Present Vungle Inc. All rights reserved.
 //
 
+#import "UnityInterface.h"
 #import "VungleManager.h"
 #import <objc/runtime.h>
+#import <StoreKit/SKAdNetwork.h>
+#import <AVFoundation/AVAudioSession.h>
 
-#if UNITY_VERSION < 500
-void UnityPause(bool pause);
-#else
-void UnityPause(int pause);
+#if defined(__IPHONE_14_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_14_0
+#import <AppTrackingTransparency/ATTrackingManager.h>
 #endif
-
-void UnitySendMessage(const char * className, const char * methodName, const char * param);
 
 #if __has_feature(objc_arc)
 #define SAFE_ARC_AUTORELEASE(x) (x)
@@ -30,6 +29,8 @@ void UnitySendMessage(const char * className, const char * methodName, const cha
 
 static VungleManager *sharedSingleton = nil;
 static dispatch_once_t onceToken;
+AVAudioSessionCategory audioCategory;
+BOOL categoryIsSet = NO;
 
 #pragma mark Class Methods
 
@@ -187,9 +188,39 @@ static dispatch_once_t onceToken;
     }
 }
 
+/*
+  0 - Not Determined
+  1 - Restricted
+  2 - Denied
+  3 - Authorized
+*/
+- (void)requestTrackingAuthorization {
+    if (@available(iOS 14, *)) {
+#if defined(__IPHONE_14_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_14_0
+        [ATTrackingManager requestTrackingAuthorizationWithCompletionHandler:^(ATTrackingManagerAuthorizationStatus status) {
+            UnitySendMessage("VungleManager", "TrackingCallback", [[@(status) stringValue] UTF8String]);
+        }];
+#endif
+    } else {
+        // Assume good to go since not iOS 14?
+        UnitySendMessage("VungleManager", "TrackingCallback", "3");
+    };
+}
+
 #pragma mark - VGVunglePubDelegate
 
 - (void)vungleWillShowAdForPlacementID:(nullable NSString *)placementID {
+    VungleBanner *bannerInfo = self.bannerViewDict[placementID];
+    // if not a banner or if the banner is MREC, then
+    // mute background if the SDK is not muted
+    if ((!bannerInfo || bannerInfo->bannerSize == VunglePluginAdSizeBannerMrec) &&
+        ![VungleSDK sharedSDK].muted) {
+        UnitySetAudioSessionActive(FALSE);
+        categoryIsSet = YES;
+        audioCategory = [[AVAudioSession sharedInstance] category];
+        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategorySoloAmbient error:NULL];
+        [[AVAudioSession sharedInstance] setActive:YES withOptions:AVAudioSessionCategoryOptionInterruptSpokenAudioAndMixWithOthers error:NULL];
+    }
     UnitySendMessage("VungleManager", "OnAdStart", placementID? [placementID UTF8String] : "");
 }
 
@@ -212,11 +243,22 @@ static dispatch_once_t onceToken;
         @"didDownload": [info didDownload] ?: [NSNull null],
         @"placementID": placementID ?: @""
     };
+    if (categoryIsSet) {
+        categoryIsSet = NO;
+        [[AVAudioSession sharedInstance] setActive:NO withOptions:AVAudioSessionCategoryOptionInterruptSpokenAudioAndMixWithOthers error:NULL];
+        [[AVAudioSession sharedInstance] setCategory:audioCategory error:NULL];
+        UnitySetAudioSessionActive(TRUE);
+    }
     UnitySendMessage("VungleManager", "OnAdEnd", [VungleManager jsonFromObject:dict].UTF8String);
 }
 
 - (void)vungleSDKDidInitialize {
-    UnitySendMessage("VungleManager", "OnInitialize", "");
+    UnitySendMessage("VungleManager", "OnInitialize", "1");
+}
+
+- (void)vungleSDKFailedToInitializeWithError:(NSError *)error {
+    [self vungleErrorLog:[error localizedDescription]];
+    UnitySendMessage("VungleManager", "OnInitialize", "0");
 }
 
 - (void)vungleSDKLog:(NSString*)message {

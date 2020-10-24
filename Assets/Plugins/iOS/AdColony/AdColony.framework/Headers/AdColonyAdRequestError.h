@@ -1,4 +1,4 @@
-#import "AdColonyTypes.h"
+#import <AdColony/AdColonyTypes.h>
 
 /**
  Typed error for AdColony ad requests.

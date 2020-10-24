@@ -1,4 +1,4 @@
-#import "AdColonyTypes.h"
+#import <AdColony/AdColonyTypes.h>
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN

@@ -1,35 +1,31 @@
 fileFormatVersion: 2
-guid: dcbcb23b81eea4ac18388eb532730826
-timeCreated: 1593132620
-licenseType: Free
+guid: f2227673eaf8942a6a87ead4e2745290
 PluginImporter:
+  externalObjects: {}
   serializedVersion: 2
   iconMap: {}
   executionOrder: {}
   isPreloaded: 0
   isOverridable: 0
   platformData:
-    data:
-      first:
-        Any: 
-      second:
-        enabled: 0
-        settings: {}
-    data:
-      first:
-        Editor: Editor
-      second:
-        enabled: 0
-        settings:
-          DefaultValueInitialized: true
-    data:
-      first:
-        Windows Store Apps: WindowsStoreApps
-      second:
-        enabled: 1
-        settings:
-          CPU: AnyCPU
-          SDK: UWP
+  - first:
+      Any: 
+    second:
+      enabled: 0
+      settings: {}
+  - first:
+      Editor: Editor
+    second:
+      enabled: 0
+      settings:
+        DefaultValueInitialized: true
+  - first:
+      Windows Store Apps: WindowsStoreApps
+    second:
+      enabled: 1
+      settings:
+        CPU: AnyCPU
+        SDK: UWP
   userData: 
   assetBundleName: 
   assetBundleVariant: 

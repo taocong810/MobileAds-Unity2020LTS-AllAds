@@ -161,5 +161,16 @@ namespace AdColony
         /// <param name="name">Name of the event</param>
         /// <param name="payload">Event data, including both required and optional meta information.</param>
         void LogEvent(string name, Hashtable data);
+
+
+        /// <summary>
+        /// Log an event when an ad impression has occurred.
+        /// </summary>
+        void LogAdImpression();
+
+        /// <summary>
+        /// Log an event when the app has opened.
+        /// </summary>
+        void LogAppOpen();    
     }
 }

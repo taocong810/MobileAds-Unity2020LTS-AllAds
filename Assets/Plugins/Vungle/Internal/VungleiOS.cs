@@ -10,7 +10,7 @@ public enum VungleAdOrientation
 	PortraitUpsideDown = 4,
 	Landscape = 5,
 	All = 6,
-	AllButUpsideDown = 7
+	AllButUpsideDown = 7,
 }
 
 public partial class VungleiOS : IVungleHelper
@@ -165,6 +165,11 @@ public partial class VungleiOS : IVungleHelper
 	{
 		return;
 	}
+
+	public void RequestTrackingAuthorization()
+	{
+		_requestTrackingAuthorization();
+	}
 	#endregion
 
 	#region DllImports
@@ -224,6 +229,9 @@ public partial class VungleiOS : IVungleHelper
 
 	[DllImport("__Internal")]
 	private static extern void _vungleCloseBanner(string placementID);
+
+	[DllImport("__Internal")]
+	private static extern void _requestTrackingAuthorization();
 	#endregion
 }
 #endif

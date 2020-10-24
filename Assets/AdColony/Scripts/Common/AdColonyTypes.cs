@@ -1,3 +1,5 @@
+using System;
+
 namespace AdColony
 {
     public enum AdsIAPEngagementType
@@ -13,6 +15,7 @@ namespace AdColony
         AdColonyZoneTypeNative
     }
 
+    [Obsolete("AdOrientationType is deprecated")]
     public enum AdOrientationType
     {
         AdColonyOrientationPortrait = 0,

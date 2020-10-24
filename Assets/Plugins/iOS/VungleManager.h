@@ -1,6 +1,6 @@
 //
 //  VungleManager.h
-//  Vungle Unity Plugin 6.7.0
+//  Vungle Unity Plugin 6.8.0
 //
 //  Copyright (c) 2013-Present Vungle Inc. All rights reserved.
 //
@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setMargins:(NSString *)placementID marginLeft:(int)marginLeft marginTop:(int)marginTop marginRight:(int)marginRight marginBottom:(int)marginBottom;
 - (void)showBanner:(NSString *)placementID;
 - (void)closeBanner:(NSString *)placementID;
+- (void)requestTrackingAuthorization;
 
 @end
 NS_ASSUME_NONNULL_END

@@ -12,12 +12,6 @@ public class iOSAgent : IronSourceIAgent
 	private static extern void CFSetPluginData (string pluginType, string pluginVersion, string pluginFrameworkVersion);
 
 	[DllImport("__Internal")]
-	private static extern void CFSetAge (int age);
-
-	[DllImport("__Internal")]
-	private static extern void CFSetGender (string gender);
-
-	[DllImport("__Internal")]
 	private static extern void CFSetMediationSegment (string segment);
 
 	[DllImport("__Internal")]
@@ -37,6 +31,9 @@ public class iOSAgent : IronSourceIAgent
 
     [DllImport("__Internal")]
 	private static extern void CFSetMetaData (string key, string value);
+
+	[DllImport("__Internal")]
+	private static extern void CFSetMetaDataWithValues (string key, params string[] values);
 
 	//******************* SDK Init *******************//
 
@@ -166,16 +163,6 @@ public class iOSAgent : IronSourceIAgent
 
 	}
 
-	public void setAge (int age)
-	{
-		CFSetAge (age);
-	}
-	
-	public void setGender (string gender)
-	{
-		CFSetGender (gender);
-	}
-
 	public void setMediationSegment (string segment)
 	{
 		CFSetMediationSegment (segment);
@@ -206,7 +193,12 @@ public class iOSAgent : IronSourceIAgent
 	 		CFSetAdaptersDebug (enabled);
 	}
 
-    public void setMetaData(string key, string value)
+    public void setMetaData(string key, params string[] values)
+	{
+	        CFSetMetaDataWithValues(key, values);
+	}
+
+	public void setMetaData(string key, string value)
 	{
 	        CFSetMetaData(key, value);
 	}

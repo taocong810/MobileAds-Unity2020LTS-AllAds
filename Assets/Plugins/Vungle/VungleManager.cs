@@ -178,9 +178,9 @@ public class VungleManager : MonoBehaviour
 		}
 	}
 
-	void OnInitialize(string empty)
+	void OnInitialize(string arg)
 	{
-		if (OnSDKInitializeEvent != null)
+		if (OnSDKInitializeEvent != null && "1".Equals(arg))
 		{
 			OnSDKInitializeEvent();
 		}
@@ -204,6 +204,51 @@ public class VungleManager : MonoBehaviour
 			args.TimeWatched = double.Parse(attrs["playTime"].ToString());
 #endif
 			OnAdFinishedEvent(ExtractStringValue(attrs, "placementID"), args);
+		}
+	}
+
+	void TrackingCallback(string trackingValue) {
+		int res = 0;
+		if (!Int32.TryParse(trackingValue, out res))
+		{
+			VungleLog.Log(VungleLog.Level.Error, "App Tracking Callback",
+				"TrackingCallback", "Failed to get a valid return value from the App Tracking Transparency callback.");
+			return;
+		}
+
+		VungleLog.Log(VungleLog.Level.Debug, "App Tracking Callback",
+			"TrackingCallback", string.Format("The result of the tracking callback {0}", trackingValue));
+
+		if (Vungle.onAppTrackingEvent == null)
+		{
+			return;
+		}
+
+		// 0 - Not Determined
+		// 1 - Restricted
+		// 2 - Denied
+		// 3 - Authorized
+		switch (res)
+		{
+			case 1:
+				// Access to app-related data for tracking is restricted
+				// User cannot change the setting
+				Vungle.onAppTrackingEvent(Vungle.AppTrackingStatus.RESTRICTED);
+				break;
+			case 2:
+				// The user denied access to app-related data for tracking
+				// The user needs to go to settings to allow tracking
+				Vungle.onAppTrackingEvent(Vungle.AppTrackingStatus.DENIED);
+				break;
+			case 3:
+				// The user authorized access to app-related data for tracking
+				Vungle.onAppTrackingEvent(Vungle.AppTrackingStatus.AUTHORIZED);
+				break;
+			case 0:
+			default:
+				// Tracking dialog has not been shown
+				Vungle.onAppTrackingEvent(Vungle.AppTrackingStatus.NOT_DETERMINED);
+				break;
 		}
 	}
 

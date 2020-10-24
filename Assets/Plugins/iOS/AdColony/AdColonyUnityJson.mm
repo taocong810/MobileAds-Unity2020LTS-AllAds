@@ -48,12 +48,23 @@
     if (jsonString == nil) {
         return;
     }
-
+    
     NSDictionary *appOptionsDictionary = [jsonString jsonStringToDictionary];
     for (NSString *key in [appOptionsDictionary allKeys]) {
         id obj = appOptionsDictionary[key];
         if (obj) {
-            if ([obj isKindOfClass:[NSString class]]) {
+            if ([key containsString:ADC_CONSENT_STRING]) {
+                NSString *string = (NSString *)obj;
+                NSArray *arrayOfComponents = [key componentsSeparatedByString:ADC_CONSENT_STRING];               
+                [self setPrivacyConsentString:string forType:arrayOfComponents[0]];
+            } else if ([key containsString:ADC_CONSENT_REQUIRED]) {
+                NSArray *arrayOfComponents = [key componentsSeparatedByString:ADC_CONSENT_REQUIRED];
+                if([obj boolValue] == YES) {
+                    [self setPrivacyFrameworkOfType:arrayOfComponents[0] isRequired:true];
+                } else {
+                    [self setPrivacyFrameworkOfType:arrayOfComponents[0] isRequired:false];
+                }
+            } else if ([obj isKindOfClass:[NSString class]]) {
                 NSString *string = (NSString *)obj;
                 if ([key isEqualToString:ADC_APPOPTIONS_USER_ID_KEY]) {
                     self.userID = string;
@@ -97,7 +108,7 @@
     if (jsonString == nil) {
         return;
     }
-
+    
     NSDictionary *appOptionsDictionary = [jsonString jsonStringToDictionary];
     for (NSString *key in [appOptionsDictionary allKeys]) {
         id obj = appOptionsDictionary[key];
@@ -140,14 +151,14 @@
 
 - (NSString *)toJsonString {
     NSDictionary *zoneData = @{
-                               ADC_ZONE_IDENTIFIER_KEY         : self.identifier,
-                               ADC_ZONE_TYPE_KEY               : [NSString stringWithFormat:@"%lu", (unsigned long)self.type],
-                               ADC_ZONE_ENABLED_KEY            : [NSNumber numberWithBool:self.enabled],
-                               ADC_ZONE_REWARDED_KEY           : [NSNumber numberWithBool:self.rewarded],
-                               ADC_ZONE_VIEWS_PER_REWARD_KEY   : [NSString stringWithFormat:@"%lu", (unsigned long)self.viewsPerReward],
-                               ADC_ZONE_VIEWS_UNTIL_REWARD_KEY : [NSString stringWithFormat:@"%lu", (unsigned long)self.viewsUntilReward],
-                               ADC_ZONE_REWARD_AMOUNT_KEY      : [NSString stringWithFormat:@"%lu", (unsigned long)self.rewardAmount],
-                               ADC_ZONE_REWARD_NAME_KEY        : self.rewardName};
+        ADC_ZONE_IDENTIFIER_KEY         : self.identifier,
+        ADC_ZONE_TYPE_KEY               : [NSString stringWithFormat:@"%lu", (unsigned long)self.type],
+        ADC_ZONE_ENABLED_KEY            : [NSNumber numberWithBool:self.enabled],
+        ADC_ZONE_REWARDED_KEY           : [NSNumber numberWithBool:self.rewarded],
+        ADC_ZONE_VIEWS_PER_REWARD_KEY   : [NSString stringWithFormat:@"%lu", (unsigned long)self.viewsPerReward],
+        ADC_ZONE_VIEWS_UNTIL_REWARD_KEY : [NSString stringWithFormat:@"%lu", (unsigned long)self.viewsUntilReward],
+        ADC_ZONE_REWARD_AMOUNT_KEY      : [NSString stringWithFormat:@"%lu", (unsigned long)self.rewardAmount],
+        ADC_ZONE_REWARD_NAME_KEY        : self.rewardName};
     return [zoneData toJsonString];
 }
 
@@ -160,7 +171,7 @@
     if (dictionary == nil) {
         return;
     }
-
+    
     for (NSString *key in [dictionary allKeys]) {
         id obj = dictionary[key];
         if (obj) {
@@ -206,21 +217,21 @@
     if (jsonString == nil) {
         return;
     }
-
+    
     [self setupWithDictionary:[jsonString jsonStringToDictionary]];
 }
 
 - (NSString *)toJsonString {
     NSDictionary *userMetadataData = @{
-                                       ADC_USER_METADATA_AGE_KEY : @(self.userAge),
-                                       ADC_USER_METADATA_INTERESTS_KEY : self.userInterests,
-                                       ADC_USER_METADATA_GENDER_KEY : [NSString stringWithFormat:@"%@", self.userGender],
-                                       ADC_USER_METADATA_LATITUDE_KEY : [NSString stringWithFormat:@"%@", self.userLatitude],
-                                       ADC_USER_METADATA_LONGITUDE_KEY : [NSString stringWithFormat:@"%@", self.userLongitude],
-                                       ADC_USER_METADATA_ZIPCODE_KEY : self.userZipCode,
-                                       ADC_USER_METADATA_HOUSEHOLD_INCOME_KEY : [NSString stringWithFormat:@"%@", self.userHouseholdIncome],
-                                       ADC_USER_METADATA_MARITAL_STATUS_KEY : self.userMaritalStatus,
-                                       ADC_USER_METADATA_EDUCATION_LEVEL_KEY : self.userEducationLevel};
+        ADC_USER_METADATA_AGE_KEY : @(self.userAge),
+        ADC_USER_METADATA_INTERESTS_KEY : self.userInterests,
+        ADC_USER_METADATA_GENDER_KEY : [NSString stringWithFormat:@"%@", self.userGender],
+        ADC_USER_METADATA_LATITUDE_KEY : [NSString stringWithFormat:@"%@", self.userLatitude],
+        ADC_USER_METADATA_LONGITUDE_KEY : [NSString stringWithFormat:@"%@", self.userLongitude],
+        ADC_USER_METADATA_ZIPCODE_KEY : self.userZipCode,
+        ADC_USER_METADATA_HOUSEHOLD_INCOME_KEY : [NSString stringWithFormat:@"%@", self.userHouseholdIncome],
+        ADC_USER_METADATA_MARITAL_STATUS_KEY : self.userMaritalStatus,
+        ADC_USER_METADATA_EDUCATION_LEVEL_KEY : self.userEducationLevel};
     return [userMetadataData toJsonString];
 }
 

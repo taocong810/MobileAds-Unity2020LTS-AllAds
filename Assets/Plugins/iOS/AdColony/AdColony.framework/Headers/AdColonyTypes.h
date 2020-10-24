@@ -1,4 +1,4 @@
-#import "AdColonyAdSize.h"
+#import <AdColony/AdColonyAdSize.h>
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
@@ -50,18 +50,18 @@ typedef NS_ENUM(NSInteger, AdColonyOrientation) {
 /**
  Enum representing zone types
  */
-typedef NS_ENUM(NSUInteger, AdColonyZoneType) {
+typedef NS_ENUM(NSInteger, AdColonyZoneType) {
 
+    /** Invalid zone type */
+    AdColonyZoneTypeInvalid = -1,
+    
     /** Interstitial zone type */
     AdColonyZoneTypeInterstitial = 0,
     
     /** Banner zone type */
-    AdColonyZoneTypeBanner,
+    AdColonyZoneTypeBanner = 1,
 
     /** Native zone type */
-    AdColonyZoneTypeNative,
-    
-    /** Unknown zone type */
-    AdColonyZoneTypeUnknown
+    AdColonyZoneTypeNative __attribute__((deprecated("It will be removed in a future release"))) = 2
 };
 

@@ -1,5 +1,5 @@
-#import "AdColonyTypes.h"
-#import "AdColonyInterstitialDelegate.h"
+#import <AdColony/AdColonyTypes.h>
+#import <AdColony/AdColonyInterstitialDelegate.h>
 #import <Foundation/Foundation.h>
 
 @class UIViewController;

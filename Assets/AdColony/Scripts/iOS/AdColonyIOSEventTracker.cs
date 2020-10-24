@@ -26,6 +26,8 @@ namespace AdColony
         [DllImport("__Internal")] private static extern void _AdcLogReservation();
         [DllImport("__Internal")] private static extern void _AdcLogSearchWithQuery(string queryString);
         [DllImport("__Internal")] private static extern void _AdcLogEvent(string name, string dataAsJson);
+        [DllImport("__Internal")] private static extern void _AdcLogImpressionn();
+        [DllImport("__Internal")] private static extern void _AdcLogOpen();
 
         public void LogTransactionWithID(string itemID, int quantity, double price, string currencyCode, string receipt, string store, string description)
         {
@@ -130,6 +132,16 @@ namespace AdColony
                 json = AdColonyJson.Encode(data);
             }
             _AdcLogEvent(name, json);
+        }
+
+        public void LogAdImpression()
+        {
+            _AdcLogImpressionn();
+        }
+
+        public void LogAppOpen()
+        {
+            _AdcLogOpen();
         }
     }
 #endif

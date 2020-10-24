@@ -28,7 +28,8 @@ internal class MoPubAndroid : MoPubPlatformApi
             sdkConfiguration.AllowLegitimateInterest,
             (int) sdkConfiguration.LogLevel,
             sdkConfiguration.NetworkConfigurationsJson,
-            sdkConfiguration.MoPubRequestOptionsJson);
+            sdkConfiguration.MoPubRequestOptionsJson,
+            MoPubManager.BackgroundEventListener.Instance);
     }
 
 
@@ -55,6 +56,12 @@ internal class MoPubAndroid : MoPubPlatformApi
     {
         PluginClass.CallStatic("onApplicationPause", paused);
         MoPubManager.EmitConsentDialogDismissedIfApplicable(paused);
+    }
+
+
+    internal override void DisableViewability()
+    {
+        PluginClass.CallStatic("disableViewability");
     }
 
 

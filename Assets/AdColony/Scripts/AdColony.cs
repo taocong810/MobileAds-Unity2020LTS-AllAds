@@ -968,7 +968,7 @@ namespace AdColony
         private Dictionary<string, AdColonyAdView> adcolonyAdViewDictionary = new Dictionary<string, AdColonyAdView>();
 
         //Start Native Banner Callbacks.
-        //below methods called from native code for Banner Ad.    
+        //below methods called from native code for Banner Ad.
         public void _OnAdColonyAdViewLoaded(string paramJson)
         {
             Debug.Log("AdColony.Wrapper._OnAdColonyAdViewLoaded called.");
@@ -1010,12 +1010,6 @@ namespace AdColony
             }
 
             AdColonyAdView adColonyAdView = GetAdColonyAdViewFromHashtable(values);
-            if (adColonyAdView == null)
-            {
-                Debug.LogError("Unable to create ad within _OnAdColonyAdViewLoaded, " + (paramJson ?? "null"));
-                return;
-            }
-
             if (Ads.OnAdViewFailedToLoad != null)
             {
                 Ads.OnAdViewFailedToLoad(adColonyAdView);

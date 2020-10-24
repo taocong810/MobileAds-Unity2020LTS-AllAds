@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace AdColony
 {
+    [Obsolete("UserMetadata is deprecated")]
     public class UserMetadata
     {
         private int _age;
@@ -215,6 +216,7 @@ namespace AdColony
         /// <param name="value">Value of the option.</param>
         /// <param name="key"> A string used to configure the option. Strings must be 128 characters or less.</param>
         /// </summary>
+        [Obsolete("SetMetadata is deprecated")]
         public void SetMetadata(string key, string value)
         {
             if (key == null)
@@ -231,6 +233,7 @@ namespace AdColony
         /// <param name="value">Value of the option.</param>
         /// <param name="key"> A string used to configure the option. Strings must be 128 characters or less.</param>
         /// </summary>
+        [Obsolete("SetMetadata is deprecated")]
         public void SetMetadata(string key, int value)
         {
             if (key == null)
@@ -247,6 +250,7 @@ namespace AdColony
         /// <param name="value">Value of the option.</param>
         /// <param name="key"> A string used to configure the option. Strings must be 128 characters or less.</param>
         /// </summary>
+        [Obsolete("SetMetadata is deprecated")]
         public void SetMetadata(string key, double value)
         {
             if (key == null)
@@ -263,6 +267,7 @@ namespace AdColony
         /// <param name="value">Value of the option.</param>
         /// <param name="key"> A string used to configure the option. Strings must be 128 characters or less.</param>
         /// </summary>
+        [Obsolete("SetMetadata is deprecated")]
         public void SetMetadata(string key, bool value)
         {
             if (key == null)
@@ -278,6 +283,7 @@ namespace AdColony
         /// </summary>
         /// <param name="key"> A string used to configure the option. Strings must be 128 characters or less.</param>
         /// <returns>The string-based value associated with the given key. Returns `null` if the option has not been set.</returns>
+        [Obsolete("GetStringMetadata is deprecated")]
         public string GetStringMetadata(string key)
         {
             return _data.ContainsKey(key) ? _data[key] as string : null;
@@ -289,6 +295,7 @@ namespace AdColony
         /// </summary>
         /// <param name="key"> A string used to configure the option. Strings must be 128 characters or less.</param>
         /// <returns>The integer-based value associated with the given key. Returns `null` if the option has not been set.</returns>
+        [Obsolete("GetIntMetadata is deprecated")]
         public int GetIntMetadata(string key)
         {
             return _data.ContainsKey(key) ? Convert.ToInt32(_data[key]) : 0;
@@ -300,6 +307,7 @@ namespace AdColony
         /// </summary>
         /// <param name="key"> A string used to configure the option. Strings must be 128 characters or less.</param>
         /// <returns>The double-precision-based value associated with the given key. Returns `null` if the option has not been set.</returns>
+        [Obsolete("GetDoubleMetadata is deprecated")]
         public double GetDoubleMetadata(string key)
         {
             return _data.ContainsKey(key) ? Convert.ToDouble(_data[key]) : 0.0;
@@ -311,6 +319,7 @@ namespace AdColony
         /// </summary>
         /// <param name="key"> A string used to configure the option. Strings must be 128 characters or less.</param>
         /// <returns>The boolean-based value associated with the given key. Returns `null` if the option has not been set.</returns>
+        [Obsolete("GetBoolMetadata is deprecated")]
         public bool GetBoolMetadata(string key)
         {
             return _data.ContainsKey(key) ? Convert.ToBoolean(Convert.ToInt32(_data[key])) : false;

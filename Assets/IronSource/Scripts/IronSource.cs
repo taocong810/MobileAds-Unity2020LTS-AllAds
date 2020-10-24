@@ -7,7 +7,7 @@ public class IronSource : IronSourceIAgent
 {
 	private IronSourceIAgent _platformAgent ;
 	private static IronSource _instance;
-	private const string UNITY_PLUGIN_VERSION = "6.17.1-r";
+	private const string UNITY_PLUGIN_VERSION = "7.0.3.1-r";
 	public const string GENDER_MALE = "male";
 	public const string GENDER_FEMALE = "female";
 	public const string GENDER_UNKNOWN = "unknown";
@@ -52,21 +52,6 @@ public class IronSource : IronSourceIAgent
 	{
 		_platformAgent.onApplicationPause (pause);
 	}
-	
-	public void setAge (int age)
-	{
-		_platformAgent.setAge (age);
-	}
-	
-	public void setGender (string gender)
-	{
-		if (gender.Equals (GENDER_MALE))
-			_platformAgent.setGender (GENDER_MALE);
-		else if (gender.Equals (GENDER_FEMALE))
-			_platformAgent.setGender (GENDER_FEMALE);
-		else if (gender.Equals (GENDER_UNKNOWN))
-			_platformAgent.setGender (GENDER_UNKNOWN);
-	}
 
 	public void setMediationSegment (string segment)
 	{
@@ -103,9 +88,14 @@ public class IronSource : IronSourceIAgent
         _platformAgent.setMetaData(key, value);
     }
 
-    //******************* SDK Init *******************//
+	public void setMetaData(string key, params string[] values)
+	{
+		_platformAgent.setMetaData(key, values);
+	}
 
-    public void setUserId (string userId)
+	//******************* SDK Init *******************//
+
+	public void setUserId (string userId)
 	{
 		_platformAgent.setUserId (userId);
 	}

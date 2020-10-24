@@ -1,12 +1,14 @@
 //
 //  VungleBinding.m
-//  Vungle Unity Plugin 6.7.0
+//  Vungle Unity Plugin 6.8.0
 //
 //  Copyright (c) 2013-Present Vungle Inc. All rights reserved.
 //
 
+#import "UnityInterface.h"
 #import <VungleSDK/VungleSDK.h>
 #import "VungleManager.h"
+#import <AdSupport/ASIdentifierManager.h>
 
 // Converts C style string to NSString
 #define GetStringParam(_x_) (_x_ != NULL) ? [NSString stringWithUTF8String:_x_] : [NSString stringWithUTF8String:""]
@@ -19,12 +21,14 @@
 #define VUNGLE_MINIMUM_FILE_SYSTEM_SIZE_FOR_AD_REQUEST_KEY  @"vungleMinimumFileSystemSizeForAdRequest"
 #define VUNGLE_MINIMUM_FILE_SYSTEM_SIZE_FOR_ASSET_DOWNLOAD_KEY  @"vungleMinimumFileSystemSizeForAssetDownload"
 
-UIViewController *UnityGetGLViewController(void);
-
 #pragma mark - SDKSetup
 
 void _vungleStartWithAppId(const char * appId, const char * pluginVersion, BOOL initHeaderBiddingDelegate) {
     [[VungleManager sharedManager] initSDK:GetStringParam(appId) pluginName:GetStringParam(pluginVersion) headerBidding:initHeaderBiddingDelegate];
+}
+
+BOOL _vungleIsInitialized() {
+    return [[VungleSDK sharedSDK] isInitialized];
 }
 
 void _vungleSetPublishIDFV(BOOL shouldEnable) {
@@ -179,6 +183,10 @@ int _getCCPAStatus() {
     return (status == VungleCCPAAccepted) ? 1 : 2;
 }
 
+void _requestTrackingAuthorization() {
+    [[VungleManager sharedManager] requestTrackingAuthorization];
+}
+
 #pragma mark - PrivateMethods
 
 static char* MakeStringCopy (const char* string) {
@@ -212,4 +220,9 @@ void _vungleClearSleep() {
 
 char * _vungleGetSdkVersion() {
     return MakeStringCopy([VungleSDKVersion UTF8String]);
+}
+
+char * _getIDFA() {
+    NSString* identifier = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+    return MakeStringCopy([identifier UTF8String]);
 }

@@ -36,6 +36,8 @@ public partial interface IVungleHelper
 	void UpdateCCPAStatus(Vungle.Consent consent);
 	Vungle.Consent GetCCPAStatus();
 
+	void RequestTrackingAuthorization();
+
 	#region Test Usage
 	void SetLogEnable(bool enable);
 	#endregion

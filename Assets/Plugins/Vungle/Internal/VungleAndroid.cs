@@ -2,17 +2,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 #if UNITY_ANDROID
-public enum VungleGender
-{
-	None = -1,
-	Male = 0,
-	Female
-}
-
 public enum VungleAdOrientation
 {
-	AutoRotate,
-	MatchVideo
+	Portrait = 1,
+	Landscape = 5,
+	All = 6,
+	AutoRotate = 6,
+	MatchVideo = 8,
 }
 
 public partial class VungleAndroid : IVungleHelper
@@ -49,6 +45,8 @@ public partial class VungleAndroid : IVungleHelper
 	}
 
 	#region SDKSetup
+	public void RequestTrackingAuthorization() { }
+
 	public void UpdateConsentStatus(Vungle.Consent consent, string version = "1.0")
 	{
 		if (Vungle.Consent.Undefined == consent) { return; }
