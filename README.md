@@ -10,6 +10,6 @@ https://assetstore.unity.com/packages/tools/integration/mobile-ads-gdpr-complian
 - Unity Ads 3.4.9
 - Vungle v.6.8.1
 - AppLovin v.6.3.0
-- Facebook Audience Network 5.10.0
+- Facebook Audience Network 6.2.0
 - MoPub 5.14.1
 - ironSource 7.0.3.1
