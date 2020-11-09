@@ -15,11 +15,6 @@ namespace AudienceNetwork
             AdSettingsBridge.Instance.SetUrlPrefix(urlPrefix);
         }
 
-        public static void SetIsChildDirected(bool isChildDirected)
-        {
-            AdSettingsBridge.Instance.SetIsChildDirected(isChildDirected);
-        }
-
         public static void SetMixedAudience(bool mixedAudience)
         {
             AdSettingsBridge.Instance.SetMixedAudience(mixedAudience);
@@ -39,6 +34,12 @@ namespace AudienceNetwork
         {
             return AdSettingsBridge.Instance.GetBidderToken();
         }
+#if UNITY_IOS
+        public static void SetAdvertiserTrackingEnabled(bool advertiserTrackingEnabled)
+        {
+            AdSettingsBridge.Instance.SetAdvertiserTrackingEnabled(advertiserTrackingEnabled);
+        }
+#endif
     }
 
     internal static class AdLogger
@@ -121,11 +122,13 @@ namespace AudienceNetwork
     {
         void AddTestDevice(string deviceID);
         void SetUrlPrefix(string urlPrefix);
-        void SetIsChildDirected(bool childDirected);
         void SetMixedAudience(bool mixedAudience);
         void SetDataProcessingOptions(string[] dataProcessingOptions);
         void SetDataProcessingOptions(string[] dataProcessingOptions, int country, int state);
         string GetBidderToken();
+#if UNITY_IOS
+        void SetAdvertiserTrackingEnabled(bool advertiserTrackingEnabled);
+#endif
     }
 
     internal class AdSettingsBridge : IAdSettingsBridge
@@ -163,10 +166,6 @@ namespace AudienceNetwork
         {
         }
 
-        public virtual void SetIsChildDirected(bool childDirected)
-        {
-        }
-
         public virtual void SetMixedAudience(bool mixedAudience)
         {
         }
@@ -183,6 +182,11 @@ namespace AudienceNetwork
         {
             return string.Empty;
         }
+#if UNITY_IOS
+        public virtual void SetAdvertiserTrackingEnabled(bool advertiserTrackingEnabled)
+        {
+        }
+#endif
     }
 
 #if UNITY_ANDROID
@@ -199,12 +203,6 @@ namespace AudienceNetwork
         {
             AndroidJavaClass adSettings = GetAdSettingsObject();
             adSettings.CallStatic("setUrlPrefix", urlPrefix);
-        }
-
-        public override void SetIsChildDirected(bool childDirected)
-        {
-            AndroidJavaClass adSettings = GetAdSettingsObject();
-            adSettings.CallStatic("setIsChildDirected", childDirected);
         }
 
         public override void SetMixedAudience(bool mixedAudience)
@@ -252,9 +250,6 @@ namespace AudienceNetwork
         private static extern void FBAdSettingsBridgeSetURLPrefix(string urlPrefix);
 
         [DllImport("__Internal")]
-        private static extern void FBAdSettingsBridgeSetIsChildDirected(bool childDirected);
-
-        [DllImport("__Internal")]
         private static extern void FBAdSettingsBridgeSetMixedAudience(bool mixedAudience);
 
         [DllImport("__Internal")]
@@ -266,6 +261,9 @@ namespace AudienceNetwork
         [DllImport("__Internal")]
         private static extern string FBAdSettingsBridgeGetBidderToken();
 
+        [DllImport("__Internal")]
+        private static extern void FBAdSettingsBridgeSetAdvertiserTrackingEnabled(bool advertiserTrackingEnabled);
+
         public override void AddTestDevice(string deviceID)
         {
             FBAdSettingsBridgeAddTestDevice(deviceID);
@@ -276,16 +274,11 @@ namespace AudienceNetwork
             FBAdSettingsBridgeSetURLPrefix(urlPrefix);
         }
 
-        public override void SetIsChildDirected(bool childDirected)
-        {
-            FBAdSettingsBridgeSetIsChildDirected(childDirected);
-        }
-
         public override void SetMixedAudience(bool mixedAudience)
         {
             FBAdSettingsBridgeSetMixedAudience(mixedAudience);
         }
-        
+
         public override void SetDataProcessingOptions(string[] dataProcessingOptions)
         {
             FBAdSettingsBridgeSetDataProcessingOptions(dataProcessingOptions, dataProcessingOptions.Length);
@@ -299,6 +292,11 @@ namespace AudienceNetwork
         public override string GetBidderToken()
         {
             return FBAdSettingsBridgeGetBidderToken();
+        }
+
+        public override void SetAdvertiserTrackingEnabled(bool advertiserTrackingEnabled)
+        {
+            FBAdSettingsBridgeSetAdvertiserTrackingEnabled(advertiserTrackingEnabled);
         }
     }
 #endif

@@ -3,13 +3,17 @@ using AudienceNetwork;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using AudienceNetwork.Utility;
+using System;
 
-public class AdViewScene : MonoBehaviour
+public class AdViewScene : BaseScene
 {
     private AdView adView;
     private AdPosition currentAdViewPosition;
     private ScreenOrientation currentScreenOrientation;
     public Text statusLabel;
+    private AdSize[] adSizeArray = (AdSize[])Enum.GetValues(typeof(AdSize));
+    private int currentAdSize;
+    public Button loadAdButton;
 
     void OnDestroy()
     {
@@ -24,9 +28,16 @@ public class AdViewScene : MonoBehaviour
     private void Awake()
     {
         AudienceNetworkAds.Initialize();
+        SetLoadAddButtonText();
+        SettingsScene.InitializeSettings();
     }
 
-    // Load Banner button
+    private void SetLoadAddButtonText()
+    {
+        loadAdButton.GetComponentInChildren<Text>().text =
+            "Load Banner (" + adSizeArray[currentAdSize].ToString() + ")";
+    }
+
     public void LoadBanner()
     {
         if (adView)
@@ -36,39 +47,52 @@ public class AdViewScene : MonoBehaviour
 
         statusLabel.text = "Loading Banner...";
 
-        // Create a banner's ad view with a unique placement ID (generate your own on the Facebook app settings).
+        // Create a banner's ad view with a unique placement ID
+        // (generate your own on the Facebook app settings).
         // Use different ID for each ad placement in your app.
-        adView = new AdView("YOUR_PLACEMENT_ID", AdSize.BANNER_HEIGHT_50);
+        adView = new AdView("YOUR_PLACEMENT_ID", adSizeArray[currentAdSize]);
+        
 
         adView.Register(gameObject);
         currentAdViewPosition = AdPosition.CUSTOM;
 
-        // Set delegates to get notified on changes or when the user interacts with the ad.
+        // Set delegates to get notified on changes or when the user interacts
+        // with the ad.
         adView.AdViewDidLoad = delegate ()
         {
             currentScreenOrientation = Screen.orientation;
             adView.Show(100);
             string isAdValid = adView.IsValid() ? "valid" : "invalid";
             statusLabel.text = "Banner loaded and is " + isAdValid + ".";
+            Debug.Log("Banner loaded");
         };
         adView.AdViewDidFailWithError = delegate (string error)
         {
             statusLabel.text = "Banner failed to load with error: " + error;
+            Debug.Log("Banner failed to load with error: " + error);
         };
         adView.AdViewWillLogImpression = delegate ()
         {
             statusLabel.text = "Banner logged impression.";
+            Debug.Log("Banner logged impression.");
         };
         adView.AdViewDidClick = delegate ()
         {
             statusLabel.text = "Banner clicked.";
+            Debug.Log("Banner clicked.");
         };
 
         // Initiate a request to load an ad.
         adView.LoadAd();
     }
 
-    // Next button
+    public void ChangeBannerSize()
+    {
+        currentAdSize += 1;
+        currentAdSize %= adSizeArray.Length;
+        SetLoadAddButtonText();
+    }
+
     public void NextScene()
     {
         SceneManager.LoadScene("RewardedVideoAdScene");

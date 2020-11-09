@@ -284,11 +284,6 @@ namespace AudienceNetwork
             AdViewBridge.Instance.SetExtraHints(uniqueId, extraHints);
         }
 
-        public void DisableAutoRefresh()
-        {
-            AdViewBridge.Instance.DisableAutoRefresh(uniqueId);
-        }
-
         internal void ExecuteOnMainThread(Action action)
         {
             if (handler)
@@ -322,8 +317,6 @@ namespace AudienceNetwork
                   double height);
 
         void SetExtraHints(int uniqueId, ExtraHints extraHints);
-
-        void DisableAutoRefresh(int uniqueId);
 
         void Release(int uniqueId);
 
@@ -408,10 +401,6 @@ namespace AudienceNetwork
         {
         }
 
-        public virtual void DisableAutoRefresh(int uniqueId)
-        {
-        }
-
         public virtual void Release(int uniqueId)
         {
         }
@@ -457,6 +446,20 @@ namespace AudienceNetwork
             if (success) {
                 return adViewContainer.bridgedAdView;
             } else {
+                return null;
+            }
+        }
+
+        private AdViewContainer AdViewContainerForAdViewId(int uniqueId)
+        {
+            AdViewContainer adViewContainer = null;
+            bool success = AdViewBridgeAndroid.adViews.TryGetValue(uniqueId, out adViewContainer);
+            if (success)
+            {
+                return adViewContainer;
+            }
+            else
+            {
                 return null;
             }
         }
@@ -518,7 +521,6 @@ namespace AudienceNetwork
                     JavaAdSizeFromAdSize(size));
 
             AdViewBridgeListenerProxy proxy = new AdViewBridgeListenerProxy(adView, bridgedAdView);
-            bridgedAdView.Call("setAdListener", proxy);
 
             AdViewContainer adViewContainer = new AdViewContainer(adView)
             {
@@ -535,9 +537,9 @@ namespace AudienceNetwork
         public override int Load(int uniqueId)
         {
             AdUtility.Prepare();
-            AndroidJavaObject adView = AdViewForAdViewId(uniqueId);
-            if (adView != null) {
-                adView.Call("loadAd");
+            AdViewContainer adViewContainer = AdViewContainerForAdViewId(uniqueId);
+            if (adViewContainer != null) {
+                adViewContainer.Load();
             }
             return uniqueId;
         }
@@ -545,10 +547,10 @@ namespace AudienceNetwork
         public override int Load(int uniqueId, String bidPayload)
         {
             AdUtility.Prepare();
-            AndroidJavaObject adView = AdViewForAdViewId(uniqueId);
-            if (adView != null)
+            AdViewContainer adViewContainer = AdViewContainerForAdViewId(uniqueId);
+            if (adViewContainer != null)
             {
-                adView.Call("loadAdFromBid", bidPayload);
+                adViewContainer.Load(bidPayload);
             }
             return uniqueId;
         }
@@ -616,14 +618,6 @@ namespace AudienceNetwork
             if (adView != null)
             {
                 adView.Call("setExtraHints", extraHints.GetAndroidObject());
-            }
-        }
-
-        public override void DisableAutoRefresh(int uniqueId)
-        {
-            AndroidJavaObject adView = AdViewForAdViewId(uniqueId);
-            if (adView != null) {
-                adView.Call("disableAutoRefresh");
             }
         }
 
@@ -697,9 +691,6 @@ namespace AudienceNetwork
                 double y,
                 double width,
                 double height);
-
-        [DllImport("__Internal")]
-        private static extern void FBAdViewBridgeDisableAutoRefresh(int uniqueId);
 
         [DllImport("__Internal")]
         private static extern void FBAdViewBridgeSetExtraHints(int uniqueId, string extraHints);
@@ -791,11 +782,6 @@ namespace AudienceNetwork
                                   double height)
         {
             return AdViewBridgeIOS.FBAdViewBridgeShow(uniqueId, x, y, width, height);
-        }
-
-        public override void DisableAutoRefresh(int uniqueId)
-        {
-            AdViewBridgeIOS.FBAdViewBridgeDisableAutoRefresh(uniqueId);
         }
 
         public override void SetExtraHints(int uniqueId, ExtraHints extraHints)
@@ -947,6 +933,28 @@ namespace AudienceNetwork
         {
             return !(object.ReferenceEquals(obj, null));
         }
+#if UNITY_ANDROID
+        internal AndroidJavaObject LoadAdConfig(String bidPayload)
+        {
+            AndroidJavaObject configBuilder = bridgedAdView.Call<AndroidJavaObject>("buildLoadAdConfig");
+            configBuilder.Call<AndroidJavaObject>("withAdListener", listenerProxy);
+            if (bidPayload != null)
+            {
+                configBuilder.Call<AndroidJavaObject>("withBid", bidPayload);
+            }
+            return configBuilder.Call<AndroidJavaObject>("build");
+        }
+        public void Load()
+        {
+            Load(null);
+        }
+        public void Load(String bidPayload)
+        {
+            AndroidJavaObject loadConfig = LoadAdConfig(bidPayload);
+            bridgedAdView.Call("loadAd", loadConfig);
+
+        }
+#endif
     }
 
 #if UNITY_ANDROID

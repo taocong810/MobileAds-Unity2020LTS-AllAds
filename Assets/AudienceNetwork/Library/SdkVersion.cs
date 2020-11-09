@@ -26,7 +26,7 @@ namespace AudienceNetwork
         {
             get
             {
-                return "5.10.1";
+                return "6.2.0";
             }
         }
     }

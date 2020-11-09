@@ -7,7 +7,7 @@
     <package>androidx.media2:media2-session:1.0.1</package>
     <package>androidx.media2:media2-widget:1.0.1</package>
     <package>com.android.support:support-annotations:28.0.0</package>
-    <package>com.facebook.android:audience-network-sdk:5.10.0</package>
+    <package>com.facebook.android:audience-network-sdk:6.2.0</package>
     <package>com.google.android.gms:play-services-ads:15.+</package>
     <package>com.google.android.gms:play-services-ads:19.3.0</package>
     <package>com.google.android.gms:play-services-ads-identifier:17.0.0</package>
@@ -63,7 +63,7 @@
     <file>Assets/Plugins/Android/androidx.vectordrawable.vectordrawable-animated-1.1.0.aar</file>
     <file>Assets/Plugins/Android/androidx.versionedparcelable.versionedparcelable-1.1.0.aar</file>
     <file>Assets/Plugins/Android/androidx.viewpager.viewpager-1.0.0.aar</file>
-    <file>Assets/Plugins/Android/com.facebook.android.audience-network-sdk-5.10.0.aar</file>
+    <file>Assets/Plugins/Android/com.facebook.android.audience-network-sdk-6.2.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.exoplayer.exoplayer-2.11.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.exoplayer.exoplayer-core-2.11.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.exoplayer.exoplayer-dash-2.11.0.aar</file>

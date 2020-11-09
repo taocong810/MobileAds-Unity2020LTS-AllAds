@@ -562,17 +562,17 @@ namespace AudienceNetwork
             AndroidJavaObject bridgedRewardedVideoAd = new AndroidJavaObject("com.facebook.ads.RewardedVideoAd", context, placementId);
 
             RewardedVideoAdBridgeListenerProxy proxy = new RewardedVideoAdBridgeListenerProxy(rewardedVideoAd, bridgedRewardedVideoAd);
-            bridgedRewardedVideoAd.Call("setAdListener", proxy);
 
+            AndroidJavaObject rewardDataObj = null;
             if (rewardData != null) {
-                AndroidJavaObject rewardDataObj = new AndroidJavaObject("com.facebook.ads.RewardData", rewardData.UserId, rewardData.Currency);
-                bridgedRewardedVideoAd.Call("setRewardData", rewardDataObj);
+                rewardDataObj = new AndroidJavaObject("com.facebook.ads.RewardData", rewardData.UserId, rewardData.Currency);
             }
 
             RewardedVideoAdContainer rewardedVideoAdContainer = new RewardedVideoAdContainer(rewardedVideoAd)
             {
                 bridgedRewardedVideoAd = bridgedRewardedVideoAd,
-                listenerProxy = proxy
+                listenerProxy = proxy,
+                rewardData = rewardDataObj
             };
 
             int key = RewardedVideoAdBridgeAndroid.lastKey;
@@ -584,9 +584,10 @@ namespace AudienceNetwork
         public override int Load(int uniqueId)
         {
             AdUtility.Prepare();
-            AndroidJavaObject rewardedVideoAd = RewardedVideoAdForUniqueId(uniqueId);
-            if (rewardedVideoAd != null) {
-                rewardedVideoAd.Call("loadAd");
+            RewardedVideoAdContainer rewardedVideoAdContainer = RewardedVideoAdContainerForUniqueId(uniqueId);
+            if (rewardedVideoAdContainer != null)
+            {
+                rewardedVideoAdContainer.Load();
             }
             return uniqueId;
         }
@@ -594,10 +595,10 @@ namespace AudienceNetwork
         public override int Load(int uniqueId, String bidPayload)
         {
             AdUtility.Prepare();
-            AndroidJavaObject rewardedVideoAd = RewardedVideoAdForUniqueId(uniqueId);
-            if (rewardedVideoAd != null)
+            RewardedVideoAdContainer rewardedVideoAdContainer = RewardedVideoAdContainerForUniqueId(uniqueId);
+            if (rewardedVideoAdContainer != null)
             {
-                rewardedVideoAd.Call("loadAdFromBid", bidPayload);
+                rewardedVideoAdContainer.Load(bidPayload);
             }
             return uniqueId;
         }
@@ -1008,6 +1009,7 @@ namespace AudienceNetwork
 #if UNITY_ANDROID
         internal AndroidJavaProxy listenerProxy;
         internal AndroidJavaObject bridgedRewardedVideoAd;
+        internal AndroidJavaObject rewardData;
 #endif
 
         internal RewardedVideoAdContainer(RewardedVideoAd rewardedVideoAd)
@@ -1024,6 +1026,32 @@ namespace AudienceNetwork
         {
             return !(object.ReferenceEquals(obj, null));
         }
+#if UNITY_ANDROID
+        internal AndroidJavaObject LoadAdConfig(String bidPayload)
+        {
+            AndroidJavaObject configBuilder = bridgedRewardedVideoAd.Call<AndroidJavaObject>("buildLoadAdConfig");
+            configBuilder.Call<AndroidJavaObject>("withAdListener", listenerProxy);
+            if (rewardData != null)
+            {
+                configBuilder.Call<AndroidJavaObject>("withRewardData", rewardData);
+            }
+            if (bidPayload != null)
+            {
+                configBuilder.Call<AndroidJavaObject>("withBid", bidPayload);
+            }
+            return configBuilder.Call<AndroidJavaObject>("build");
+        }
+
+        public void Load()
+        {
+            Load(null);
+        }
+        public void Load(String bidPayload)
+        {
+            AndroidJavaObject loadConfig = LoadAdConfig(bidPayload);
+            bridgedRewardedVideoAd.Call("loadAd", loadConfig);
+        }
+#endif
     }
 
 #if UNITY_ANDROID

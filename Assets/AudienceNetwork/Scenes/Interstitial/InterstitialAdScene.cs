@@ -4,7 +4,7 @@ using AudienceNetwork;
 using UnityEngine.SceneManagement;
 using AudienceNetwork.Utility;
 
-public class InterstitialAdScene : MonoBehaviour
+public class InterstitialAdScene : BaseScene
 {
 
     private InterstitialAd interstitialAd;
@@ -18,6 +18,7 @@ public class InterstitialAdScene : MonoBehaviour
     private void Awake()
     {
         AudienceNetworkAds.Initialize();
+        SettingsScene.InitializeSettings();
     }
 
     // Load button

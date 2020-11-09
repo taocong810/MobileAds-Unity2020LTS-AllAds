@@ -4,7 +4,7 @@ using AudienceNetwork;
 using UnityEngine.SceneManagement;
 using AudienceNetwork.Utility;
 
-public class RewardedVideoAdScene : MonoBehaviour
+public class RewardedVideoAdScene : BaseScene
 {
 
     private RewardedVideoAd rewardedVideoAd;
@@ -19,6 +19,7 @@ public class RewardedVideoAdScene : MonoBehaviour
     private void Awake()
     {
         AudienceNetworkAds.Initialize();
+        SettingsScene.InitializeSettings();
     }
 
     // Load button

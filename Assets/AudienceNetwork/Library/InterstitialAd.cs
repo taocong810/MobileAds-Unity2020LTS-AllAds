@@ -416,6 +416,20 @@ namespace AudienceNetwork
             }
         }
 
+        private InterstitialAdContainer InterstitialAdContainerForuniqueId(int uniqueId)
+        {
+            InterstitialAdContainer interstitialAdContainer = null;
+            bool success = InterstitialAdBridgeAndroid.interstitialAds.TryGetValue(uniqueId, out interstitialAdContainer);
+            if (success)
+            {
+                return interstitialAdContainer;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         private string GetStringForuniqueId(int uniqueId,
                                             string method)
         {
@@ -455,7 +469,6 @@ namespace AudienceNetwork
             AndroidJavaObject bridgedInterstitialAd = new AndroidJavaObject("com.facebook.ads.InterstitialAd", context, placementId);
 
             InterstitialAdBridgeListenerProxy proxy = new InterstitialAdBridgeListenerProxy(interstitialAd, bridgedInterstitialAd);
-            bridgedInterstitialAd.Call("setAdListener", proxy);
 
             InterstitialAdContainer interstitialAdContainer = new InterstitialAdContainer(interstitialAd)
             {
@@ -472,10 +485,10 @@ namespace AudienceNetwork
         public override int Load(int uniqueId)
         {
             AdUtility.Prepare();
-            AndroidJavaObject interstitialAd = InterstitialAdForuniqueId(uniqueId);
-            if (interstitialAd != null)
+            InterstitialAdContainer interstitialAdContainer = InterstitialAdContainerForuniqueId(uniqueId);
+            if (interstitialAdContainer != null)
             {
-                interstitialAd.Call("loadAd");
+                interstitialAdContainer.Load();
             }
             return uniqueId;
         }
@@ -483,10 +496,10 @@ namespace AudienceNetwork
         public override int Load(int uniqueId, String bidPayload)
         {
             AdUtility.Prepare();
-            AndroidJavaObject interstitialAd = InterstitialAdForuniqueId(uniqueId);
-            if (interstitialAd != null)
+            InterstitialAdContainer interstitialAdContainer = InterstitialAdContainerForuniqueId(uniqueId);
+            if (interstitialAdContainer != null)
             {
-                interstitialAd.Call("loadAdFromBid", bidPayload);
+                interstitialAdContainer.Load(bidPayload);
             }
             return uniqueId;
         }
@@ -821,6 +834,29 @@ namespace AudienceNetwork
         {
             return !(object.ReferenceEquals(obj, null));
         }
+
+#if UNITY_ANDROID
+        internal AndroidJavaObject LoadAdConfig(String bidPayload)
+        {
+            AndroidJavaObject configBuilder = bridgedInterstitialAd.Call<AndroidJavaObject>("buildLoadAdConfig");
+            configBuilder.Call<AndroidJavaObject>("withAdListener", listenerProxy);
+            if (bidPayload != null)
+            {
+                configBuilder.Call<AndroidJavaObject>("withBid", bidPayload);
+            }
+            return configBuilder.Call<AndroidJavaObject>("build");
+        }
+
+        public void Load()
+        {
+            Load(null);
+        }
+        public void Load(String bidPayload)
+        {
+            AndroidJavaObject loadConfig = LoadAdConfig(bidPayload);
+            bridgedInterstitialAd.Call("loadAd", loadConfig);
+        }
+#endif
     }
 
 #if UNITY_ANDROID
