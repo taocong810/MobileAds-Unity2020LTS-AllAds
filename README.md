@@ -13,3 +13,5 @@ https://assetstore.unity.com/packages/tools/integration/mobile-ads-gdpr-complian
 - Facebook Audience Network v.6.2.0
 - MoPub v.5.14.1
 - ironSource v.7.0.3.1
+  
+<a href="https://www.youtube.com/playlist?list=PLKeb94eicHQtlz9CrrJwKNJF8Su_Cq4b_">Integration playlist available on Youtube</a>
