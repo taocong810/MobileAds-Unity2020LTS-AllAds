@@ -103,6 +103,13 @@ public interface IronSourceIAgent
 	void setSegment(IronSourceSegment segment);
 
 	void setConsent(bool consent);
+
+	//******************* ConsentView API *******************//
+
+	void loadConsentViewWithType(string consentViewType);
+
+	void showConsentViewWithType(string consentViewType);
+
 }
 
 public static class IronSourceAdUnits

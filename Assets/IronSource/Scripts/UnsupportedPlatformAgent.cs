@@ -1,5 +1,4 @@
-﻿#if (!UNITY_IPHONE && !UNITY_IOS && !UNITY_ANDROID) || (UNITY_EDITOR)
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -259,8 +258,17 @@ public class UnsupportedPlatformAgent : IronSourceIAgent
 		Debug.Log ("Unsupported Platform");
 	}
 
-		
+	//******************* ConsentView API *******************//
+
+	public void loadConsentViewWithType(string consentViewType)
+	{
+		Debug.Log("Unsupported Platform");
+	}
+
+	public void showConsentViewWithType(string consentViewType)
+	{
+		Debug.Log("Unsupported Platform");
+	}
+
 	#endregion
 }
-
-#endif

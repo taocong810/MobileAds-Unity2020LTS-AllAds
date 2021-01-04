@@ -61,6 +61,7 @@ char *const IRONSOURCE_EVENTS = "IronSourceEvents";
         [IronSource setOfferwallDelegate:self];
         [IronSource setBannerDelegate:self];
         [IronSource setImpressionDataDelegate:self];
+        [IronSource setConsentViewWithDelegate:self];
         
         _bannerView = nil;
         _bannerViewController = nil;
@@ -457,6 +458,19 @@ char *const IRONSOURCE_EVENTS = "IronSourceEvents";
         UnitySendMessage(IRONSOURCE_EVENTS, "onGetOfferwallCreditsFailed", "");
 }
 
+#pragma mark ConsentView API
+
+-(void)loadConsentViewWithType:(NSString *)consentViewType {
+    [IronSource loadConsentViewWithType: consentViewType];
+}
+
+-(void)showConsentViewWithType:(NSString *)consentViewType {
+    @synchronized(self) {
+        UIViewController* viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+        [IronSource showConsentViewWithViewController:viewController andType:consentViewType];
+    }
+}
+
 #pragma mark Banner API
 
 - (void)loadBanner:(NSString *)description width:(NSInteger)width height:(NSInteger)height position:(NSInteger)position placement:(NSString *)placement {
@@ -690,6 +704,44 @@ char *const IRONSOURCE_EVENTS = "IronSourceEvents";
 
 }
 
+#pragma mark ConsentView Delegate
+
+- (void)consentViewDidAccept:(NSString *)consentViewType {
+    UnitySendMessage(IRONSOURCE_EVENTS, "onConsentViewDidAccept", MakeStringCopy(consentViewType));
+}
+
+- (void)consentViewDidDismiss:(NSString *)consentViewType {
+    UnitySendMessage(IRONSOURCE_EVENTS, "onConsentViewDidDismiss", MakeStringCopy(consentViewType));
+}
+
+- (void)consentViewDidFailToLoadWithError:(NSError *)error consentViewType:(NSString *)consentViewType {
+    NSArray *params;
+    if (error)
+        params = @[consentViewType, [self parseErrorToEvent:error]];
+    else
+        params = @[consentViewType, @""];
+    
+    UnitySendMessage(IRONSOURCE_EVENTS, "onConsentViewDidFailToLoadWithError", MakeStringCopy([self getJsonFromObj:params]));
+}
+
+- (void)consentViewDidLoadSuccess:(NSString *)consentViewType {
+    UnitySendMessage(IRONSOURCE_EVENTS, "onConsentViewDidLoadSuccess", MakeStringCopy(consentViewType));
+}
+
+- (void)consentViewDidFailToShowWithError:(NSError *)error consentViewType:(NSString *)consentViewType {
+    NSArray *params;
+    if (error)
+        params = @[consentViewType, [self parseErrorToEvent:error]];
+    else
+        params = @[consentViewType, @""];
+    
+    UnitySendMessage(IRONSOURCE_EVENTS, "onConsentViewDidFailToShowWithError", MakeStringCopy([self getJsonFromObj:params]));
+}
+
+- (void)consentViewDidShowSuccess:(NSString *)consentViewType {
+    UnitySendMessage(IRONSOURCE_EVENTS, "onConsentViewDidShowSuccess", MakeStringCopy(consentViewType));
+}
+
 #pragma mark - C Section
 
 #ifdef __cplusplus
@@ -700,7 +752,7 @@ extern "C" {
         [[iOSBridge start] setPluginDataWithType:GetStringParam(pluginType) pluginVersion:GetStringParam(pluginVersion) pluginFrameworkVersion:GetStringParam(pluginFrameworkVersion)];
     }
     
-  
+    
     void CFSetMediationSegment(const char *segment){
         [[iOSBridge start] setMediationSegment:GetStringParam(segment)];
     }
@@ -918,6 +970,16 @@ extern "C" {
     
     void CFSetSegment (char* jsonString) {
         [[iOSBridge start] setSegment:GetStringParam(jsonString)];
+    }
+    
+#pragma mark ConsentView API
+    
+    void CFLoadConsentViewWithType (char* consentViewType){
+        [[iOSBridge start] loadConsentViewWithType:GetStringParam(consentViewType)];
+    }
+    
+    void CFShowConsentViewWithType (char* consentViewType){
+        [[iOSBridge start] showConsentViewWithType:GetStringParam(consentViewType)];
     }
     
 #ifdef __cplusplus

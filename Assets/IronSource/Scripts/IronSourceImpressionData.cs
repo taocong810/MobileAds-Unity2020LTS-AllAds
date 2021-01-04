@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 
 public class IronSourceImpressionData
@@ -30,6 +31,8 @@ public class IronSourceImpressionData
                 object obj;
                 double parsedDouble;
                 allData = json;
+                // Retrieve a CultureInfo object.
+                CultureInfo invCulture = CultureInfo.InvariantCulture;
                 Dictionary<string, object> jsonDic = IronSourceJSON.Json.Deserialize(json) as Dictionary<string, object>;
                 if (jsonDic.TryGetValue(IronSourceConstants.IMPRESSION_DATA_KEY_AUCTION_ID, out obj) && obj != null)
                 {
@@ -76,12 +79,12 @@ public class IronSourceImpressionData
                     encryptedCPM = obj.ToString();
                 }
 
-                if (jsonDic.TryGetValue(IronSourceConstants.IMPRESSION_DATA_KEY_REVENUE, out obj) && obj != null && double.TryParse(obj.ToString(), out parsedDouble))
+                if (jsonDic.TryGetValue(IronSourceConstants.IMPRESSION_DATA_KEY_REVENUE, out obj) && obj != null && double.TryParse(string.Format(invCulture, "{0}", obj), NumberStyles.Any, invCulture, out parsedDouble))
                 {
                     revenue = parsedDouble;
                 }
 
-                if (jsonDic.TryGetValue(IronSourceConstants.IMPRESSION_DATA_KEY_LIFETIME_REVENUE, out obj) && obj != null && double.TryParse(obj.ToString(), out parsedDouble))
+                if (jsonDic.TryGetValue(IronSourceConstants.IMPRESSION_DATA_KEY_LIFETIME_REVENUE, out obj) && obj != null && double.TryParse(string.Format(invCulture,"{0}",obj), NumberStyles.Any, invCulture, out parsedDouble))
                 {
                     lifetimeRevenue = parsedDouble;
                 }

@@ -149,6 +149,13 @@ public class iOSAgent : IronSourceIAgent
 	[DllImport("__Internal")]
 	private static extern void CFSetConsent(bool consent);
 
+	//******************* ConsentView API *******************//
+
+	[DllImport("__Internal")]
+	private static extern void CFLoadConsentViewWithType(string consentViewType);
+
+	[DllImport("__Internal")]
+	private static extern void CFShowConsentViewWithType(string consentViewType);
 
 	public iOSAgent ()
 	{	
@@ -404,6 +411,16 @@ public class iOSAgent : IronSourceIAgent
 		CFSetConsent(consent);
 	}
 
-#endregion
+	public void loadConsentViewWithType(string consentViewType)
+    {
+		CFLoadConsentViewWithType(consentViewType);
+	}
+
+	public void showConsentViewWithType(string consentViewType)
+	{
+		CFShowConsentViewWithType(consentViewType);
+	}
+
+	#endregion
 }
 #endif

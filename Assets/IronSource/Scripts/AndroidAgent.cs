@@ -281,6 +281,18 @@ public class AndroidAgent : IronSourceIAgent
 		getBridge().Call("setConsent",consent);
 	}
 
+	//******************* ConsentView API *******************//
+
+	public void loadConsentViewWithType(string consentViewType)
+	{
+		Debug.Log("Unsupported Platform");
+	}
+
+	public void showConsentViewWithType(string consentViewType)
+	{
+		Debug.Log("Unsupported Platform");
+	}
+
 #endregion
 }
 

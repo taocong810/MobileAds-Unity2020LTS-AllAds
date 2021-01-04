@@ -7,22 +7,30 @@ public class IronSource : IronSourceIAgent
 {
 	private IronSourceIAgent _platformAgent ;
 	private static IronSource _instance;
-	private const string UNITY_PLUGIN_VERSION = "7.0.3.1-r";
+	private const string UNITY_PLUGIN_VERSION = "7.0.4.1-r";
 	public const string GENDER_MALE = "male";
 	public const string GENDER_FEMALE = "female";
 	public const string GENDER_UNKNOWN = "unknown";
+	private static bool isUnsupportedPlatform;
 
 	private IronSource ()
 	{
-		#if UNITY_EDITOR 
-		_platformAgent = new UnsupportedPlatformAgent();
+		if (!isUnsupportedPlatform)
+		{
+#if UNITY_EDITOR
+			_platformAgent = new UnsupportedPlatformAgent();
 #elif (UNITY_IPHONE || UNITY_IOS)
-		_platformAgent = new iOSAgent();
+			_platformAgent = new iOSAgent();
 #elif UNITY_ANDROID
 		_platformAgent = new AndroidAgent ();
-
 #endif
-        var type = typeof(IronSourceEvents);
+		}
+
+		else
+        {
+			_platformAgent = new UnsupportedPlatformAgent();
+		}
+		var type = typeof(IronSourceEvents);
         var mgr = new GameObject("IronSourceEvents", type).GetComponent<IronSourceEvents>(); // Creates IronSourceEvents gameObject
     }
 
@@ -44,6 +52,11 @@ public class IronSource : IronSourceIAgent
 	public static string unityVersion ()
 	{
 		return Application.unityVersion;
+	}
+
+	public static void setUnsupportedPlatform()
+    {
+		isUnsupportedPlatform = true;
 	}
 
 	//******************* Base API *******************//
@@ -278,6 +291,18 @@ public class IronSource : IronSourceIAgent
 	{
 		_platformAgent.setConsent(consent);
 	}
-	
+
+	//******************* ConsentView API *******************//
+
+	public void loadConsentViewWithType(string consentViewType)
+    {
+		_platformAgent.loadConsentViewWithType(consentViewType);
+    }
+
+	public void showConsentViewWithType(string consentViewType)
+	{
+		_platformAgent.showConsentViewWithType(consentViewType);
+	}
+
 	#endregion
 }
