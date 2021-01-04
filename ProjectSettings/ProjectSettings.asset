@@ -669,8 +669,8 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLWasmStreaming: 0
   scriptingDefineSymbols:
-    4: _PATCH;_PATCH;_PATCH;_PATCH;USE_VUNGLE;USE_ADCOLONY;USE_ADMOB;USE_CHARTBOOST;USE_UNITYADS;USE_APPLOVIN;USE_ADMOB_PATCH;USE_FACEBOOKADS
-    7: _PATCH;USE_VUNGLE;USE_ADCOLONY;USE_ADMOB;USE_CHARTBOOST;USE_UNITYADS;USE_APPLOVIN;USE_ADMOB_PATCH;USE_FACEBOOKADS;USE_MOPUB;USE_IRONSOURCE
+    4: _PATCH;_PATCH;_PATCH;_PATCH;USE_ADMOB;USE_ADMOB_PATCH
+    7: _PATCH;USE_ADMOB;USE_ADMOB_PATCH
     14: 
   platformArchitecture: {}
   scriptingBackend: {}
@@ -681,6 +681,7 @@ PlayerSettings:
   additionalIl2CppArgs: 
   scriptingRuntimeVersion: 1
   gcIncremental: 0
+  assemblyVersionValidation: 1
   gcWBarrierValidation: 0
   apiCompatibilityLevelPerPlatform: {}
   m_RenderingPath: 1
@@ -730,6 +731,7 @@ PlayerSettings:
   XboxOneCapability: []
   XboxOneGameRating: {}
   XboxOneIsContentPackage: 0
+  XboxOneEnhancedXboxCompatibilityMode: 0
   XboxOneEnableGPUVariability: 1
   XboxOneSockets: {}
   XboxOneSplashScreen: {fileID: 0}
