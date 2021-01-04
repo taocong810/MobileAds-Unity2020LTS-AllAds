@@ -21,7 +21,7 @@ public abstract class MoPub : MoPubBase
     /// Please see <a href="https://github.com/mopub/mopub-unity-sdk">our GitHub repository</a> for details.
     /// </para>
     /// </summary>
-    public const string MoPubSdkVersion = "5.14.1";
+    public const string MoPubSdkVersion = "5.15.0";
 
 
     #region SdkSetup
@@ -940,6 +940,7 @@ public abstract class MoPub : MoPubBase
         public class Flurry     : SupportedNetwork { public Flurry()     : base("Flurry") { } }
         public class IronSource : SupportedNetwork { public IronSource() : base("IronSource") { } }
         public class Pangle     : SupportedNetwork { public Pangle()     : base("Pangle") { } }
+        public class Snap       : SupportedNetwork { public Snap()       : base("SnapAd") { } }
         public class Tapjoy     : SupportedNetwork { public Tapjoy()     : base("Tapjoy") { } }
         public class Unity      : SupportedNetwork { public Unity()      : base("UnityAds") { } }
         public class Verizon    : SupportedNetwork { public Verizon()    : base("Verizon") { } }
