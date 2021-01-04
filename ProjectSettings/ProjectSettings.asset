@@ -669,8 +669,8 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLWasmStreaming: 0
   scriptingDefineSymbols:
-    4: _PATCH;_PATCH;_PATCH;_PATCH;USE_ADMOB;USE_ADMOB_PATCH
-    7: _PATCH;USE_ADMOB;USE_ADMOB_PATCH
+    4: _PATCH;_PATCH;_PATCH;_PATCH;_PATCH;USE_UNITYADS
+    7: _PATCH;_PATCH;USE_UNITYADS
     14: 
   platformArchitecture: {}
   scriptingBackend: {}
