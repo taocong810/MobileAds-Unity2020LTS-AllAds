@@ -244,7 +244,7 @@ public class MoPubDemoGUI : MonoBehaviour
     private void Start()
     {
         // The SdkInitialize() call is handled by the MoPubManager prefab now. Please see:
-        // https://developers.mopub.com/publishers/unity/initialize/#option-1-use-the-mopub-manager-recommended
+        // https://developers.mopub.com/publishers/unity/initialize/#option-1-initialize-using-the-mopub-manager-recommended
 
         MoPub.LoadBannerPluginsForAdUnits(_bannerAdUnits);
         MoPub.LoadInterstitialPluginsForAdUnits(_interstitialAdUnits);

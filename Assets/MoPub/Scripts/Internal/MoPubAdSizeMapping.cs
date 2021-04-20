@@ -25,12 +25,10 @@ public static class AdSizeMapping
             case MaxAdSize.ScreenWidthHeight90:
             case MaxAdSize.ScreenWidthHeight250:
             case MaxAdSize.ScreenWidthHeight280:
-                var pixels = Screen.width;
-                var dpi = Screen.dpi;
-                var dips = pixels / (dpi / 160.0f);
-                return dips;
+                // This is the value for LinearLayout.LayoutParams.MATCH_PARENT on Android; iOS will rehydrate to an
+                // explicit size before sending the ad request.
+                return -1;
             default:
-
                 // fallback to default size: Width320Height50
                 return 300;
         }

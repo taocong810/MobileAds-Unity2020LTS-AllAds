@@ -60,7 +60,7 @@ char *const IRONSOURCE_EVENTS = "IronSourceEvents";
         [IronSource setISDemandOnlyRewardedVideoDelegate:self];
         [IronSource setOfferwallDelegate:self];
         [IronSource setBannerDelegate:self];
-        [IronSource setImpressionDataDelegate:self];
+        [IronSource addImpressionDataDelegate:self];
         [IronSource setConsentViewWithDelegate:self];
         
         _bannerView = nil;
@@ -742,6 +742,19 @@ char *const IRONSOURCE_EVENTS = "IronSourceEvents";
     UnitySendMessage(IRONSOURCE_EVENTS, "onConsentViewDidShowSuccess", MakeStringCopy(consentViewType));
 }
 
+#pragma mark ConversionValue API
+
+-(const char *) getConversionValue {
+    NSNumber *conversionValue = [IronSource getConversionValue];
+    char *res = MakeStringCopy([conversionValue stringValue]);
+    return res;
+}
+
+#pragma mark ILRD API
+- (void)setAdRevenueData:(NSString *)dataSource impressionData:(NSData *)impressionData {
+    [IronSource setAdRevenueDataWithDataSource:dataSource impressionData:impressionData];
+}
+
 #pragma mark - C Section
 
 #ifdef __cplusplus
@@ -980,6 +993,21 @@ extern "C" {
     
     void CFShowConsentViewWithType (char* consentViewType){
         [[iOSBridge start] showConsentViewWithType:GetStringParam(consentViewType)];
+    }
+
+#pragma mark ConversionValue API
+    
+    const char *CFGetConversionValue(){
+        return [[iOSBridge start] getConversionValue];
+    }
+    
+#pragma mark ILRD API
+  void  CFSetAdRevenueData(char* datasource,char* impressiondata){
+        NSData *data=[GetStringParam(impressiondata)dataUsingEncoding:NSUTF8StringEncoding];
+        if (!data) {
+            return;
+        }
+      return [[iOSBridge start] setAdRevenueData:GetStringParam(datasource)impressionData:data];
     }
     
 #ifdef __cplusplus

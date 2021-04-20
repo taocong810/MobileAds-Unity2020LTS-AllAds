@@ -65,6 +65,12 @@ public class UnsupportedPlatformAgent : IronSourceIAgent
 		Debug.Log("Unsupported Platform");
 	}
 
+	public int? getConversionValue()
+    {
+		Debug.Log("Unsupported Platform");
+		return null;
+	}
+
 	//******************* SDK Init *******************//
 
 	public void setUserId (string userId)
@@ -266,6 +272,13 @@ public class UnsupportedPlatformAgent : IronSourceIAgent
 	}
 
 	public void showConsentViewWithType(string consentViewType)
+	{
+		Debug.Log("Unsupported Platform");
+	}
+
+	//******************* ILRD API *******************//
+
+	public void setAdRevenueData(string dataSource, Dictionary<string, string> impressionData)
 	{
 		Debug.Log("Unsupported Platform");
 	}

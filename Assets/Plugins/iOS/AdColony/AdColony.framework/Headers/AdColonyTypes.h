@@ -17,7 +17,10 @@ typedef NS_ENUM(NSUInteger, AdColonyRequestError) {
     AdColonyRequestErrorNoFillForRequest,
 
     /** Either AdColony has not been configured, is still in the process of configuring, is still downloading assets, or is already showing an ad. */
-    AdColonyRequestErrorUnready
+    AdColonyRequestErrorUnready,
+    
+    /** This iOS version is no longer supported. */
+    AdColonyRequestErrorFeatureUnsupported,
 };
 
 /**

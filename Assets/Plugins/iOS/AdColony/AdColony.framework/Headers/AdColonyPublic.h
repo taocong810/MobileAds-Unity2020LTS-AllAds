@@ -201,13 +201,20 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (NSString *)getSDKVersion;
 
-
 /**
 @abstract Gathers AdColony specific information to be passed into OpenRTB bid request.
 @discussion Gathers AdColony specific information to be passed into OpenRTB bid requests from a mediation setting.
 @return The String to be passed into OpenRTB bid requests, or an empty String if AdColony has not yet been configured.
+@deprecated please use asynchronous version
 */
-+ (NSString *)collectSignals;
++ (NSString *)collectSignals __attribute__((deprecated("Deprecated in v4.5.0")));
+
+/**
+@abstract Gathers AdColony specific information to be passed into OpenRTB bid request.
+@discussion Gathers AdColony specific information to be passed into OpenRTB bid requests from a mediation setting.
+@param completion A block of code to be executed when collection finishes, with result or error, on calling thread.
+*/
++ (void)collectSignals:(nonnull void (^)(NSString * _Nullable, NSError * _Nullable))completion;
 
 @end
 

@@ -8,3 +8,4 @@ Temp/
 *.sln
 .vs/
 obj/
+*.vsconfig

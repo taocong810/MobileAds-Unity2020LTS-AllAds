@@ -69,9 +69,9 @@ namespace ChartboostSDK
 			XmlElement usesSDKElement = FindChildNode(manNode, "uses-sdk") as XmlElement;
 			if (usesSDKElement == null)
 			{
-				usesSDKElement = doc.CreateElement("uses-sdk");
-				usesSDKElement.SetAttribute("minSdkVersion",ns,"16");
-				manNode.InsertBefore(usesSDKElement, dict);
+				//usesSDKElement = doc.CreateElement("uses-sdk");
+				//usesSDKElement.SetAttribute("minSdkVersion",ns,"16");
+				//manNode.InsertBefore(usesSDKElement, dict);
 			}
 			else if (Convert.ToInt32(usesSDKElement.GetAttribute("minSdkVersion",ns)) < 16)
 			{

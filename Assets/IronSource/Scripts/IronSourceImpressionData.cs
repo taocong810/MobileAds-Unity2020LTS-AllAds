@@ -19,6 +19,7 @@ public class IronSourceImpressionData
     public readonly string precision;
     public readonly double? lifetimeRevenue;
     public readonly string encryptedCPM;
+    public readonly int? conversionValue;
     public readonly string allData;
 
 
@@ -30,6 +31,7 @@ public class IronSourceImpressionData
             {
                 object obj;
                 double parsedDouble;
+                int parsedInt;
                 allData = json;
                 // Retrieve a CultureInfo object.
                 CultureInfo invCulture = CultureInfo.InvariantCulture;
@@ -88,6 +90,12 @@ public class IronSourceImpressionData
                 {
                     lifetimeRevenue = parsedDouble;
                 }
+
+                if (jsonDic.TryGetValue(IronSourceConstants.IMPRESSION_DATA_KEY_CONVERSION_VALUE, out obj) && obj != null && int.TryParse(string.Format(invCulture, "{0}", obj), NumberStyles.Any, invCulture, out parsedInt))
+                {
+                    conversionValue = parsedInt;
+                }
+
             }
             catch (Exception ex)
             {
@@ -113,6 +121,7 @@ public class IronSourceImpressionData
                 ", precision='" + precision + '\'' +
                 ", lifetimeRevenue=" + lifetimeRevenue +
                 ", encryptedCPM='" + encryptedCPM + '\'' +
+                ", conversionValue=" + conversionValue +
                 '}';
     }
 }
