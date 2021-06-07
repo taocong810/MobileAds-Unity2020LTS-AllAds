@@ -4,13 +4,13 @@ All you have to do is to import Mobile Ads from the Asset Store inside this proj
 https://assetstore.unity.com/packages/tools/integration/mobile-ads-gdpr-compliant-102892?aid=1011l8QY4
 
 # Contains the following Advertiser SDKs:
-- Google Mobile Ads Unity Plugin v.5.4.0
+- Google Mobile Ads Unity Plugin v.6.0.0
 - AdColony v.4.5.0
 - Chartboost v.8.1.0
 - Unity Ads 3.6.1
 - Vungle v.6.9.2.0
 - AppLovin v.6.3.1
-- Facebook Audience Network v.6.3.0
+- Facebook Audience Network v.6.4.0
 - MoPub v.5.16.4
 - ironSource v.7.1.5.1
   
