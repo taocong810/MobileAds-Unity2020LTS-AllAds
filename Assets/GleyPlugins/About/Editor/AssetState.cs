@@ -1,4 +1,4 @@
-﻿namespace GleyPlugins
+﻿namespace Gley.About
 {
     public enum AssetState
     {

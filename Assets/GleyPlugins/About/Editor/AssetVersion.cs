@@ -1,15 +1,15 @@
-﻿namespace GleyPlugins
+﻿namespace Gley.About
 {
     [System.Serializable]
     public class AssetVersion
     {
-        public GleyAssets assetName;
+        public string folderName;
         public string longVersion;
         public int shortVersion;
 
-        public AssetVersion(GleyAssets assetName)
+        public AssetVersion(string folderName)
         {
-            this.assetName = assetName;
+            this.folderName = folderName;
         }
     }
 }

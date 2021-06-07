@@ -228,7 +228,7 @@ PlayerSettings:
   clonedFromGUID: 00000000000000000000000000000000
   templatePackageId: 
   templateDefaultScene: 
-  useCustomMainManifest: 0
+  useCustomMainManifest: 1
   useCustomLauncherManifest: 0
   useCustomMainGradleTemplate: 0
   useCustomLauncherGradleManifest: 0
@@ -238,15 +238,15 @@ PlayerSettings:
   AndroidTargetArchitectures: 1
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: 
-  AndroidKeyaliasName: 
+  AndroidKeystoreName: C:/Users/gleym/Desktop/ProiecteGley/Plugins/EasyIAP/EasyIAP2018/Key/GleyTestApp.keystore
+  AndroidKeyaliasName: gleytestapp
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0
   AndroidIsGame: 1
   AndroidEnableTango: 0
   androidEnableBanner: 1
   androidUseLowAccuracyLocation: 0
-  androidUseCustomKeystore: 0
+  androidUseCustomKeystore: 1
   m_AndroidBanners:
   - width: 320
     height: 180
@@ -513,6 +513,8 @@ PlayerSettings:
   switchNetworkInterfaceManagerInitializeEnabled: 1
   switchPlayerConnectionEnabled: 1
   switchUseNewStyleFilepaths: 0
+  switchUseMicroSleepForYield: 1
+  switchMicroSleepForYieldTime: 25
   ps4NPAgeRating: 12
   ps4NPTitleSecret: 
   ps4NPTrophyPackPath: 
@@ -608,8 +610,8 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
   scriptingDefineSymbols:
-    4: _PATCH;USE_UNITYADS;USE_ADCOLONY;USE_ADMOB;USE_CHARTBOOST;USE_VUNGLE;USE_APPLOVIN;USE_ADMOB_PATCH;USE_FACEBOOKADS
-    7: _PATCH;USE_UNITYADS;USE_IRONSOURCE;USE_ADCOLONY;USE_ADMOB;USE_CHARTBOOST;USE_VUNGLE;USE_APPLOVIN;USE_ADMOB_PATCH;USE_FACEBOOKADS
+    4: _PATCH;USE_ADMOB;USE_ADMOB_PATCH
+    7: USE_ADMOB;USE_ADMOB_PATCH
     14: 
   additionalCompilerArguments: {}
   platformArchitecture: {}

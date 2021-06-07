@@ -1,4 +1,4 @@
-﻿namespace GleyPlugins
+﻿namespace Gley.About
 {
     using UnityEngine;
 #if UNITY_2018_3_OR_NEWER
