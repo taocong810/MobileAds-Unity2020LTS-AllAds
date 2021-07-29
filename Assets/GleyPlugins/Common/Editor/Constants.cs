@@ -24,5 +24,16 @@
         //Traffic
         public const string USE_GLEY_TRAFFIC = "USE_GLEY_TRAFFIC";
         public const string DEBUG_TRAFFIC = "DEBUG_TRAFFIC";
+
+        //IAP
+        public const string GleyIAPiOS = "GleyIAPiOS";
+        public const string GleyIAPGooglePlay = "GleyIAPGooglePlay";
+        public const string GleyIAPAmazon = "GleyIAPAmazon";
+        public const string GleyIAPMacOS = "GleyIAPMacOS";
+        public const string GleyUseValidation = "GleyUseValidation";
+
+        //Notifications
+        public const string EnableNotificationsAndroid = "EnableNotificationsAndroid";
+        public const string EnableNotificationsIos = "EnableNotificationsIos";
     }
 }
