@@ -8,6 +8,9 @@
     <package>com.google.android.gms:play-services-ads:15.+</package>
     <package>com.google.android.gms:play-services-ads:20.0.0</package>
     <package>com.google.android.gms:play-services-ads-identifier:16.0.0</package>
+    <package>com.google.android.gms:play-services-ads-identifier:17.0.0</package>
+    <package>com.google.android.gms:play-services-basement:17.2.1</package>
+    <package>com.ironsource.sdk:mediationsdk:7.1.7</package>
     <package>com.mopub:mopub-sdk:5.17.0</package>
   </packages>
   <files>
@@ -64,7 +67,7 @@
     <file>Assets/Plugins/Android/androidx.work.work-runtime-2.1.0.aar</file>
     <file>Assets/Plugins/Android/com.adcolony.sdk-4.5.0.aar</file>
     <file>Assets/Plugins/Android/com.applovin.applovin-sdk-10.3.2.aar</file>
-    <file>Assets/Plugins/Android/com.facebook.android.audience-network-sdk-6.5.1.aar</file>
+    <file>Assets/Plugins/Android/com.facebook.android.audience-network-sdk-6.4.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.exoplayer.exoplayer-2.13.3.aar</file>
     <file>Assets/Plugins/Android/com.google.android.exoplayer.exoplayer-common-2.13.3.aar</file>
     <file>Assets/Plugins/Android/com.google.android.exoplayer.exoplayer-core-2.13.3.aar</file>
@@ -74,19 +77,21 @@
     <file>Assets/Plugins/Android/com.google.android.exoplayer.exoplayer-smoothstreaming-2.13.3.aar</file>
     <file>Assets/Plugins/Android/com.google.android.exoplayer.exoplayer-transformer-2.13.3.aar</file>
     <file>Assets/Plugins/Android/com.google.android.exoplayer.exoplayer-ui-2.13.3.aar</file>
-    <file>Assets/Plugins/Android/com.google.android.gms.play-services-ads-20.2.0.aar</file>
-    <file>Assets/Plugins/Android/com.google.android.gms.play-services-ads-base-20.2.0.aar</file>
-    <file>Assets/Plugins/Android/com.google.android.gms.play-services-ads-identifier-17.0.1.aar</file>
-    <file>Assets/Plugins/Android/com.google.android.gms.play-services-ads-lite-20.2.0.aar</file>
+    <file>Assets/Plugins/Android/com.google.android.gms.play-services-ads-20.0.0.aar</file>
+    <file>Assets/Plugins/Android/com.google.android.gms.play-services-ads-base-20.0.0.aar</file>
+    <file>Assets/Plugins/Android/com.google.android.gms.play-services-ads-identifier-17.0.0.aar</file>
+    <file>Assets/Plugins/Android/com.google.android.gms.play-services-ads-lite-20.0.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-basement-17.6.0.aar</file>
+    <file>Assets/Plugins/Android/com.google.android.gms.play-services-gass-20.0.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-measurement-base-18.0.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-measurement-sdk-api-18.0.0.aar</file>
-    <file>Assets/Plugins/Android/com.google.android.gms.play-services-tasks-17.0.0.aar</file>
+    <file>Assets/Plugins/Android/com.google.android.gms.play-services-tasks-17.1.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.ump.user-messaging-platform-1.0.0.aar</file>
     <file>Assets/Plugins/Android/com.google.code.gson.gson-2.8.6.jar</file>
     <file>Assets/Plugins/Android/com.google.guava.failureaccess-1.0.1.jar</file>
     <file>Assets/Plugins/Android/com.google.guava.guava-27.1-android.jar</file>
     <file>Assets/Plugins/Android/com.google.guava.listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar</file>
+    <file>Assets/Plugins/Android/com.ironsource.sdk.mediationsdk-7.1.7.aar</file>
     <file>Assets/Plugins/Android/com.mopub.mopub-sdk-5.17.0.aar</file>
     <file>Assets/Plugins/Android/com.mopub.mopub-sdk-banner-5.17.0.aar</file>
     <file>Assets/Plugins/Android/com.mopub.mopub-sdk-base-5.17.0.aar</file>
@@ -98,8 +103,8 @@
     <file>Assets/Plugins/Android/com.mopub.volley.mopub-volley-2.1.0.jar</file>
     <file>Assets/Plugins/Android/org.jetbrains.annotations-13.0.jar</file>
     <file>Assets/Plugins/Android/org.jetbrains.kotlin.kotlin-android-extensions-runtime-1.4.30.jar</file>
-    <file>Assets/Plugins/Android/org.jetbrains.kotlin.kotlin-stdlib-1.4.30.jar</file>
-    <file>Assets/Plugins/Android/org.jetbrains.kotlin.kotlin-stdlib-common-1.4.30.jar</file>
+    <file>Assets/Plugins/Android/org.jetbrains.kotlin.kotlin-stdlib-1.4.32.jar</file>
+    <file>Assets/Plugins/Android/org.jetbrains.kotlin.kotlin-stdlib-common-1.4.32.jar</file>
     <file>Assets/Plugins/Android/org.jetbrains.kotlin.kotlin-stdlib-jdk7-1.4.30.jar</file>
   </files>
   <settings>
