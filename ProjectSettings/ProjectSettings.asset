@@ -611,8 +611,8 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
   scriptingDefineSymbols:
-    4: USE_ADMOB;USE_ADMOB_PATCH;USE_ADCOLONY
-    7: USE_ADMOB;USE_ADMOB_PATCH;USE_ADCOLONY
+    4: USE_ADMOB;USE_ADMOB_PATCH;USE_ADCOLONY;USE_UNITYADS
+    7: USE_ADMOB;USE_ADMOB_PATCH;USE_ADCOLONY;USE_UNITYADS
     14: 
   additionalCompilerArguments: {}
   platformArchitecture: {}
@@ -687,7 +687,10 @@ PlayerSettings:
   XboxOneOverrideIdentityName: 
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
-  cloudServicesEnabled: {}
+  cloudServicesEnabled:
+    Analytics: 1
+    Purchasing: 1
+    Unity Ads: 1
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -701,11 +704,11 @@ PlayerSettings:
     m_VersionName: 
   apiCompatibilityLevel: 6
   activeInputHandler: 0
-  cloudProjectId: 
+  cloudProjectId: 101e3df2-2773-4409-a984-5ea0ace10e94
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 
-  organizationId: 
+  projectName: Jumpy! The legacy of a chicken
+  organizationId: gley
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   virtualTexturingSupportEnabled: 0
