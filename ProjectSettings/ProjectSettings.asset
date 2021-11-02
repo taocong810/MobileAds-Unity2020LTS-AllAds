@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: Gley
-  productName: MobileAds-v1.10.0
+  productName: MobileAds-v1.10.4
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -235,7 +235,7 @@ PlayerSettings:
   clonedFromGUID: 00000000000000000000000000000000
   templatePackageId: 
   templateDefaultScene: 
-  useCustomMainManifest: 0
+  useCustomMainManifest: 1
   useCustomLauncherManifest: 0
   useCustomMainGradleTemplate: 0
   useCustomLauncherGradleManifest: 0
@@ -621,8 +621,8 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
   scriptingDefineSymbols:
-    4: _PATCH;USE_ADMOB;USE_ADMOB_PATCH;USE_ADCOLONY
-    7: _PATCH;USE_ADMOB;USE_ADMOB_PATCH;USE_ADCOLONY
+    4: _PATCH;USE_ADMOB;USE_ADMOB_PATCH;USE_ADCOLONY;USE_CHARTBOOST
+    7: _PATCH;USE_ADMOB;USE_ADMOB_PATCH;USE_ADCOLONY;USE_CHARTBOOST
     14: 
   additionalCompilerArguments: {}
   platformArchitecture: {}
