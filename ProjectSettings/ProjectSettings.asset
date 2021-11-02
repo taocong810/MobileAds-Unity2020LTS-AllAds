@@ -621,8 +621,8 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
   scriptingDefineSymbols:
-    4: _PATCH
-    7: _PATCH
+    4: _PATCH;USE_ADMOB;USE_ADMOB_PATCH
+    7: _PATCH;USE_ADMOB;USE_ADMOB_PATCH
     14: 
   additionalCompilerArguments: {}
   platformArchitecture: {}
