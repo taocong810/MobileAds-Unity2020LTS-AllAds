@@ -160,7 +160,7 @@ PlayerSettings:
     tvOS: 0
   overrideDefaultApplicationIdentifier: 1
   AndroidBundleVersionCode: 1
-  AndroidMinSdkVersion: 19
+  AndroidMinSdkVersion: 23
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
   aotOptions: 
@@ -238,7 +238,7 @@ PlayerSettings:
   useCustomMainManifest: 1
   useCustomLauncherManifest: 0
   useCustomMainGradleTemplate: 0
-  useCustomLauncherGradleManifest: 0
+  useCustomLauncherGradleManifest: 1
   useCustomBaseGradleTemplate: 0
   useCustomGradlePropertiesTemplate: 0
   useCustomProguardFile: 0
@@ -621,8 +621,8 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
   scriptingDefineSymbols:
-    4: _PATCH;USE_ADMOB;USE_ADMOB_PATCH;USE_ADCOLONY;USE_CHARTBOOST;USE_UNITYADS
-    7: _PATCH;USE_ADMOB;USE_ADMOB_PATCH;USE_ADCOLONY;USE_CHARTBOOST;USE_UNITYADS
+    4: _PATCH;USE_ADMOB;USE_ADMOB_PATCH;USE_ADCOLONY;USE_CHARTBOOST;USE_UNITYADS;USE_VUNGLE;USE_APPLOVIN
+    7: _PATCH;USE_ADMOB;USE_ADMOB_PATCH;USE_ADCOLONY;USE_CHARTBOOST;USE_UNITYADS;USE_VUNGLE;USE_APPLOVIN
     14: 
   additionalCompilerArguments: {}
   platformArchitecture: {}
