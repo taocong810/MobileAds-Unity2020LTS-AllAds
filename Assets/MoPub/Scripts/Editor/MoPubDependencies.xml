@@ -1,0 +1,8 @@
+<dependencies>
+  <androidPackages>
+    <androidPackage spec="com.mopub:mopub-sdk:5.18.0"/>
+  </androidPackages>
+  <iosPods>
+    <iosPod name="mopub-ios-sdk" subspecs="['Core']" minTargetSdk="10.0" version="5.18.0"/>
+  </iosPods>
+</dependencies>
