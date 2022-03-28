@@ -1,5 +1,7 @@
 <dependencies>
   <packages>
+    <package>com.adcolony:sdk:4.6.4</package>
+    <package>com.google.android.gms:play-services-ads:15.+</package>
     <package>com.google.android.gms:play-services-ads:20.6.0</package>
   </packages>
   <files>
@@ -40,6 +42,7 @@
     <file>Assets/Plugins/Android/androidx.versionedparcelable.versionedparcelable-1.1.1.aar</file>
     <file>Assets/Plugins/Android/androidx.viewpager.viewpager-1.0.0.aar</file>
     <file>Assets/Plugins/Android/androidx.work.work-runtime-2.7.0.aar</file>
+    <file>Assets/Plugins/Android/com.adcolony.sdk-4.6.4.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-ads-20.6.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-ads-base-20.6.0.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-ads-identifier-17.0.0.aar</file>
