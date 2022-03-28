@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: Gley
-  productName: MobileAds-v1.10.4
+  productName: MobileAds-v1.10.7
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -235,18 +235,18 @@ PlayerSettings:
   clonedFromGUID: 00000000000000000000000000000000
   templatePackageId: 
   templateDefaultScene: 
-  useCustomMainManifest: 1
+  useCustomMainManifest: 0
   useCustomLauncherManifest: 0
   useCustomMainGradleTemplate: 0
   useCustomLauncherGradleManifest: 0
   useCustomBaseGradleTemplate: 0
   useCustomGradlePropertiesTemplate: 0
   useCustomProguardFile: 0
-  AndroidTargetArchitectures: 1
+  AndroidTargetArchitectures: 3
   AndroidTargetDevices: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: C:/Users/Gley/Desktop/ProiecteGley/Plugins/EasyIAP/EasyIAP-Release/Key/GleyTestApp.keystore
+  AndroidKeystoreName: D:/Work/Gley/AssetStore/EasyIAP/EasyIAP-Realease/Key/GleyTestApp.keystore
   AndroidKeyaliasName: gleytestapp
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0
@@ -524,7 +524,9 @@ PlayerSettings:
   switchPlayerConnectionEnabled: 1
   switchUseNewStyleFilepaths: 0
   switchUseMicroSleepForYield: 1
+  switchEnableRamDiskSupport: 0
   switchMicroSleepForYieldTime: 25
+  switchRamDiskSpaceSize: 12
   ps4NPAgeRating: 12
   ps4NPTitleSecret: 
   ps4NPTrophyPackPath: 
@@ -621,12 +623,13 @@ PlayerSettings:
   webGLThreadsSupport: 0
   webGLDecompressionFallback: 0
   scriptingDefineSymbols:
-    4: _PATCH;USE_ADMOB;USE_ADMOB_PATCH;USE_ADCOLONY;USE_CHARTBOOST;USE_UNITYADS;USE_VUNGLE;USE_APPLOVIN
-    7: _PATCH;USE_ADMOB;USE_ADMOB_PATCH;USE_ADCOLONY;USE_CHARTBOOST;USE_UNITYADS;USE_VUNGLE;USE_APPLOVIN;USE_MOPUB;USE_IRONSOURCE
+    4: _PATCH;USE_ADMOB;USE_ADMOB_PATCH
+    7: _PATCH;USE_ADMOB;USE_ADMOB_PATCH
     14: 
   additionalCompilerArguments: {}
   platformArchitecture: {}
-  scriptingBackend: {}
+  scriptingBackend:
+    Android: 1
   il2cppCompilerConfiguration: {}
   managedStrippingLevel: {}
   incrementalIl2cppBuild: {}
@@ -669,6 +672,7 @@ PlayerSettings:
   metroFTAName: 
   metroFTAFileTypes: []
   metroProtocolName: 
+  vcxProjDefaultLanguage: 
   XboxOneProductId: 
   XboxOneUpdateKey: 
   XboxOneSandboxId: 
