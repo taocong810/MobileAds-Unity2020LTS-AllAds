@@ -49,14 +49,18 @@
         [MenuItem("Window/Gley/About Gley", false, 0)]
         private static void Init()
         {
-            Object assetToLoad = AssetDatabase.LoadAssetAtPath("Assets/GleyPlugins/About/Editor/IconReferences.asset", typeof(IconReferences));
-            if (assetToLoad == null)
-            {
-                assetToLoad = AssetDatabase.LoadAssetAtPath("Assets/AboutWindow/Assets/About/Editor/IconReferences.asset", typeof(IconReferences));
-            }
+            LoadIcons();
 
-            iconReferences = (IconReferences)assetToLoad;
+            LoadAssetStorePackages();
 
+            window = (GleyAboutWindow)GetWindow(typeof(GleyAboutWindow));
+            window.minSize = new Vector2(600, 520);
+            window.titleContent = new GUIContent(" About v2.0", iconReferences.gleyLogo);
+            window.Show();
+        }
+
+        static void LoadAssetStorePackages()
+        {
             assetStorePackages = new AssetStorePackage[]
             {
                 new AssetStorePackage("TrafficSystem", "Traffic System", iconReferences.trafficSystemIcon, "Highly performant and easy to use traffic system that can make any driving game more fun to play in just a few clicks.", "https://assetstore.unity.com/packages/slug/194888?aid=1011l8QY4"),
@@ -72,16 +76,30 @@
                 new AssetStorePackage("AllPlatformsSave", "All Platforms Save", iconReferences.saveIcon, "Easy to use: same line of code to save or load game data on all supported Unity platforms.", "https://assetstore.unity.com/packages/tools/integration/all-platforms-save-115960?aid=1011l8QY4"),
                 new AssetStorePackage("DeliveryVehiclesPack", "Delivery Vehicles Pack", iconReferences.vehiclesIcon, "Delivery Vehicles Pack contains 3 low poly, textured vehicles: Scooter, Three Wheeler, Minivan", "https://assetstore.unity.com/packages/3d/vehicles/land/delivery-vehicles-pack-55528?aid=1011l8QY4")
             };
+        }
 
+        static void LoadIcons()
+        {
+            Object assetToLoad = AssetDatabase.LoadAssetAtPath("Assets/GleyPlugins/About/Editor/IconReferences.asset", typeof(IconReferences));
+            if (assetToLoad == null)
+            {
+                assetToLoad = AssetDatabase.LoadAssetAtPath("Assets/AboutWindow/Assets/About/Editor/IconReferences.asset", typeof(IconReferences));
+            }
 
-            window = (GleyAboutWindow)GetWindow(typeof(GleyAboutWindow));
-            window.minSize = new Vector2(600, 520);
-            window.titleContent = new GUIContent(" About v2.0", iconReferences.gleyLogo);
-            window.Show();
+            iconReferences = (IconReferences)assetToLoad;
         }
 
         void OnEnable()
         {
+            if(iconReferences==null)
+            {
+                LoadIcons();
+            }
+
+            if(assetStorePackages==null)
+            {
+                LoadAssetStorePackages();
+            }
             contactButtons = new ContactButton[]
             {
                 new ContactButton(new GUIContent(" Website", iconReferences.websiteIcon),"https://gleygames.com"),
@@ -214,6 +232,8 @@
 
         private bool AssetNeedsUpdate(string folderName)
         {
+            if (allAssetsVersion.assetsVersion.Count == 0)
+                return false;
             string path = "Assets//GleyPlugins/" + folderName + "/Scripts/Version.txt";
             StreamReader reader = new StreamReader(path);
             int localVersion = JsonUtility.FromJson<AssetVersion>(reader.ReadToEnd()).shortVersion;
