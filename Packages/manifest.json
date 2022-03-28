@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.unity.ads": "3.7.5",
+    "com.unity.ads": "4.0.1",
     "com.unity.ide.visualstudio": "2.0.14",
     "com.unity.ide.vscode": "1.2.5",
     "com.unity.ugui": "1.0.0",
