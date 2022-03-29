@@ -10,7 +10,7 @@ https://assetstore.unity.com/packages/tools/integration/mobile-ads-gdpr-complian
 - Unity Ads 4.0.1
 - Vungle v.6.10.6.1
 - AppLovin Max v.5.3.0
-- MoPub v.5.18.0 - not working yet
-- ironSource v.7.1.12
+- MoPub v.5.18.0
+- ironSource v.7.2.1.1
   
 <a href="https://www.youtube.com/playlist?list=PLKeb94eicHQtlz9CrrJwKNJF8Su_Cq4b_">Integration playlist available on Youtube</a>
